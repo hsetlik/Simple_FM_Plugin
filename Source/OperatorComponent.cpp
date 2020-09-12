@@ -86,7 +86,7 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     //setting up index slider
     modIndexSlider.setSliderStyle(juce::Slider::LinearHorizontal);
     modIndexSlider.setRange(1.0f, 500.0f);
-    modIndexSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    modIndexSlider.setTextBoxStyle(juce::Slider::TextBoxLeft, false, 50, 20);
     modIndexSlider.setValue(1.0);
     modIndexSlider.addListener(sliderLstnr);
     addAndMakeVisible(&modIndexSlider);
@@ -103,15 +103,15 @@ void OperatorComponent::resized()
     modToggleButtons[4].setBounds(n, 9 * n, 2 * n, 2 * n);
     modToggleButtons[5].setBounds(n, 11 * n, 2 * n, 2 * n);
     
-    aSlider.setBounds(4 * n, n, 2.5 * n, 2.5 * n);
-    dSlider.setBounds(7 * n, n, 2.5 * n, 2.5 * n);
-    sSlider.setBounds(10 * n, n, 2.5 * n, 2.5 * n);
-    rSlider.setBounds(13 * n, n, 2.5 * n, 2.5 * n);
+    aSlider.setBounds(4 * n, n, 4.5 * n, 4.5 * n);
+    dSlider.setBounds(7 * n, n, 4.5 * n, 4.5 * n);
+    sSlider.setBounds(10 * n, n, 4.5 * n, 4.5 * n);
+    rSlider.setBounds(13 * n, n, 4.5 * n, 4.5 * n);
     
-    audioToggleButton.setBounds(8 * n, 5 * n, 3 * n, 1.5 * n);
+    audioToggleButton.setBounds(9 * n, 8 * n, 3 * n, 1.5 * n);
     
-    ratioSlider.setBounds(4 * n, 5 * n, 3 * n, 3 * n);
-    levelSlider.setBounds(12 * n, 5 * n, 3 * n, 3 * n);
+    ratioSlider.setBounds(4 * n, 6 * n, 5 * n, 5 * n);
+    levelSlider.setBounds(12 * n, 6 * n, 5 * n, 5 * n);
     
-    modIndexSlider.setBounds(4 * n, 14 * n, 10 * n, 1.5 * n);
+    modIndexSlider.setBounds(2 * n, 14 * n, 13 * n, 2.5 * n);
 }

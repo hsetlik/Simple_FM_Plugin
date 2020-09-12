@@ -19,9 +19,9 @@ OperatorProcessor::OperatorProcessor(int index, float* fund)
 void OperatorProcessor::setModValue()
 {
     modValue = 0.0f;
-    for(int i = 0; i < modSourceIndeces.size(); ++i)
+    for(int i = 0; i < modSourceValues.size(); ++i)
     {
-        int sourceIndex = modSourceIndeces[i];
+        int sourceIndex = modSourceValues[i];
         modValue += modSourceValues[sourceIndex];
     }
 }

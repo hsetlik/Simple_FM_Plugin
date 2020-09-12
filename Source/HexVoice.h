@@ -76,4 +76,4 @@ class HexVoice : public juce::SynthesiserVoice
         
     }
     //===============================================
-}
+};
