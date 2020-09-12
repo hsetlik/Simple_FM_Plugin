@@ -28,16 +28,15 @@ public:
     maxiEnv envelope;
     maxiOsc oscillator;
     float fAttack, fDecay, fSustain, fRelease;
-    int modlayer;
+    int modLayer;
     float modIndex;
     float ratio;
     float lastOutputSample;
     bool takesInputFrom[6];
     std::vector<float> modSourceValues;
-    float modValue;
+    float modValue; 
     float frequency;
     float* fundamental;
-    
 };
 
 class SetProcessor
@@ -67,8 +66,4 @@ public:
     std::vector<OperatorProcessor*> layer3;
     std::vector<OperatorProcessor*> layer4;
     std::vector<OperatorProcessor*> layer5;
-    
-    
-    
-    
 };
