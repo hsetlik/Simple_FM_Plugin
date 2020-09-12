@@ -34,6 +34,7 @@ private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     HexFmAudioProcessor& audioProcessor;
+    
     std::vector<OperatorComponent*> OpComps;
     OperatorComponent op0;
     OperatorComponent op1;

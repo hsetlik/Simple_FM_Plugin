@@ -22,7 +22,7 @@ op5(5, this, this)
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (800, 600);
-    
+    //placing operator components
     addAndMakeVisible(&op0);
     addAndMakeVisible(&op1);
     addAndMakeVisible(&op2);
@@ -36,6 +36,31 @@ op5(5, this, this)
     OpComps.push_back(&op3);
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
+    //setting up attachments
+    for(int i = 0; i < 6; ++i)
+    {
+        //string to append to each parameter name
+        juce::String iStr = juce::String(i);
+        //loop to attach mod toggle buttons
+        for(int n = 0; n < 6; ++n)
+        {
+            juce::String nStr = juce::String(n);
+            OpComps[i]->modToggleAttachments[n].reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "mod" + nStr + "op" + iStr + "Param", OpComps[i]->modToggleButtons[i]));
+        }
+        //attaching audio toggle
+        OpComps[i]->audioToggleAttach.reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "audioToggleParam" + iStr, OpComps[i]->audioToggleButton));
+        //attaching envelope parameters
+        OpComps[i]->aSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "aParam" + iStr, OpComps[i]->aSlider));
+        OpComps[i]->dSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "dParam" + iStr, OpComps[i]->dSlider));
+        OpComps[i]->sSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "sParam" + iStr, OpComps[i]->sSlider));
+        OpComps[i]->rSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "rParam" + iStr, OpComps[i]->rSlider));
+        //attach index slider
+        OpComps[i]->modIndexSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "modIndexParam" + iStr, OpComps[i]->modIndexSlider));
+        //attach ratio slider
+        OpComps[i]->ratioSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioParam" + iStr, OpComps[i]->ratioSlider));
+        //attach level slider
+        OpComps[i]->levelSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "levelParam" + iStr, OpComps[i]->levelSlider));
+    }
 }
 
 HexFmAudioProcessorEditor::~HexFmAudioProcessorEditor()
