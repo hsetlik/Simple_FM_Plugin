@@ -36,8 +36,35 @@ op5(5, this, this)
     OpComps.push_back(&op3);
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
-    
     addAndMakeVisible(&algSelector);
+    
+    algSelector.selectorKnobAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "algorithmParam", algSelector.selectorKnob));
+    
+    for(int i = 0; i < 6; ++i)
+    {
+        juce::String iStr = juce::String(i);
+        OpComps[i]->aSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "attackParam" + iStr,
+        OpComps[i]->aSlider));
+        
+        OpComps[i]->dSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "decayParam" + iStr,
+        OpComps[i]->dSlider));
+        
+        OpComps[i]->sSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "sustainParam" + iStr,
+        OpComps[i]->sSlider));
+        
+        OpComps[i]->rSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "releaseParam" + iStr,
+        OpComps[i]->rSlider));
+        
+        OpComps[i]->modIndexSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "modIndexParam" + iStr,
+        OpComps[i]->modIndexSlider));
+        
+        OpComps[i]->ratioSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioParam" + iStr,
+        OpComps[i]->ratioSlider));
+        
+        OpComps[i]->levelSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "levelParam" + iStr,
+        OpComps[i]->levelSlider));
+    }
+    
 }
 
 HexFmAudioProcessorEditor::~HexFmAudioProcessorEditor()

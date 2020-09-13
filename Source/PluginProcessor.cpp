@@ -8,7 +8,48 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
+juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    for(int i = 0; i < 6; ++i)
+    {
+        juce::String iStr = juce::String(i);
+        auto asId = "attackParam" + iStr;
+        auto asName = "Operator " + iStr + " Attack";
+        auto dsId = "decayParam" + iStr;
+        auto dsName = "Operator " + iStr + " Decay";
+        auto ssId = "sustainParam" + iStr;
+        auto ssName = "Operator " + iStr + " Sustain";
+        auto rsId = "releaseParam" + iStr;
+        auto rsName = "Operator " + iStr + " Release";
+        
+        auto indexId = "modIndexParam" + iStr;
+        auto indexName = "Operator " + iStr + " Index";
+        auto ratioId = "ratioParam" + iStr;
+        auto ratioName = "Operator " + iStr + " frequency ratio";
+        auto levelId = "levelParam" + iStr;
+        auto levelName = "Operator " + iStr + " Level";
+        
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+        (asId, asName, 0.1f, 4000.0f, 8.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+        (dsId, dsName, 0.1f, 4000.0f, 8.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+        (ssId, ssName, 0.0f, 1.0f, 0.6f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+        (rsId, rsName, 0.1f, 4000.0f, 8.0f));
+        
+        layout.add(std::make_unique<juce::AudioParameterFloat>(indexId, indexName, 1.0f, 500.0f, 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(levelId, levelName, 0.0f, 1.0f, 0.6f));
+    }
+    auto algId = "algorithmParam";
+    auto algName = "Algorithm";
+    layout.add(std::make_unique<juce::AudioParameterFloat>
+               (algId, algName, 1.0f, 2.0f, 1.0f));
+    return layout;
+    
+}
 
 //==============================================================================
 HexFmAudioProcessor::HexFmAudioProcessor()
@@ -20,7 +61,7 @@ HexFmAudioProcessor::HexFmAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), tree(*this, nullptr, "ALLPARAMETERS", createLayout())
 #endif
 {
     for(int i = 0; i < 6; ++i)

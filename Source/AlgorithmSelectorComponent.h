@@ -41,6 +41,7 @@ public:
     void resized() override;
     //child componenets
     juce::Slider selectorKnob;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> selectorKnobAttach;
     AlgorithmDiagram diagram;
     
 };
