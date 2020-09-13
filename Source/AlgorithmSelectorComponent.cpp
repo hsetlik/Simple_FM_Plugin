@@ -9,3 +9,124 @@
 */
 
 #include "AlgorithmSelectorComponent.h"
+void AlgorithmDiagram::paint(juce::Graphics &g)
+{
+    int n = getWidth() / 18;
+    g.fillAll(juce::Colours::whitesmoke);
+    for(int i = 0; i < 6; ++i)
+    {
+        opBox[i].setSize(3 * n, 3 * n);
+    }
+    g.setColour(juce::Colours::seagreen);
+    switch(currentAlg)
+    {
+        case alg1:
+        {
+            opBox[0].setX(7 * n);
+            opBox[0].setY(n);
+            
+            opBox[1].setX(7 * n);
+            opBox[1].setY(5 * n);
+            
+            opBox[2].setX(7 * n);
+            opBox[2].setY(9 * n);
+            
+            opBox[3].setX(3 * n);
+            opBox[3].setY(5 * n);
+            
+            opBox[4].setX(3 * n);
+            opBox[4].setY(9 * n);
+            
+            opBox[5].setX(11 * n);
+            opBox[5].setY(9 * n);
+            
+            for(int i = 0; i < 6; ++i)
+            {
+                g.setColour(juce::Colours::seagreen);
+                g.fillRect(opBox[i]);
+                g.setColour(juce::Colours::white);
+                g.drawFittedText(juce::String(i + 1),opBox[i], juce::Justification::centred, 1, 0.0f);
+            }
+            g.setColour(juce::Colours::seagreen);
+            
+            juce::Rectangle<int> line1 = {8 * n, 4 * n, n, n};
+            juce::Rectangle<int> line2 = {6 * n, 6 * n, n, n};
+            juce::Rectangle<int> line3 = {4 * n, 8 * n, n, n};
+            juce::Rectangle<int> line4 = {6 * n, 10 * n, n, n};
+            juce::Rectangle<int> line5 = {10 * n, 10 * n, n, n};
+            
+            g.fillRect(line1);
+            g.fillRect(line2);
+            g.fillRect(line3);
+            g.fillRect(line4);
+            g.fillRect(line5);
+            
+        }
+        case alg2:
+        {   //alg 2 is just a clone of alg 1 for now
+            opBox[0].setX(7 * n);
+            opBox[0].setY(n);
+            
+            opBox[1].setX(7 * n);
+            opBox[1].setY(5 * n);
+            
+            opBox[2].setX(7 * n);
+            opBox[2].setY(9 * n);
+            
+            opBox[3].setX(3 * n);
+            opBox[3].setY(5 * n);
+            
+            opBox[4].setX(3 * n);
+            opBox[4].setY(9 * n);
+            
+            opBox[5].setX(11 * n);
+            opBox[5].setY(9 * n);
+            
+            for(int i = 0; i < 6; ++i)
+            {
+                g.setColour(juce::Colours::seagreen);
+                g.fillRect(opBox[i]);
+                g.setColour(juce::Colours::white);
+                g.drawFittedText(juce::String(i + 1),opBox[i], juce::Justification::centred, 1, 0.0f);
+            }
+            g.setColour(juce::Colours::seagreen);
+            
+            juce::Rectangle<int> line1 = {(int)4.9 * n, 3 * n, (int)0.2 * n, n};
+            juce::Rectangle<int> line2 = {(int)4.9 * n, 6 * n, (int)0.2 * n, n};
+            juce::Rectangle<int> line3 = {6 * n, (int)4.9 * n, n, (int)0.2 * n};
+            juce::Rectangle<int> line4 = {(int)7.9 * n, 6 * n, (int)0.2 * n, n};
+            juce::Rectangle<int> line5 = {3 * n, (int)7.9 * n, n, (int)0.2 * n};
+            /*
+            g.fillRect(line1);
+            g.fillRect(line2);
+            g.fillRect(line3);
+            g.fillRect(line4);
+            g.fillRect(line5);
+             */
+        }
+    }
+}
+
+void AlgorithmDiagram::resized()
+{
+
+}
+
+
+
+AlgorithmSelectorComponent::AlgorithmSelectorComponent() : diagram(currentAlg)
+{
+    selectorKnob.setSliderStyle(juce::Slider::IncDecButtons);
+    selectorKnob.setRange(1.0, 2.0, 1.0);
+    selectorKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
+    selectorKnob.setNumDecimalPlacesToDisplay(0);
+    addAndMakeVisible(&selectorKnob);
+    addAndMakeVisible(&diagram);
+}
+
+void AlgorithmSelectorComponent::resized()
+{
+    int n = getWidth() / 12;
+    diagram.setBounds(n, n, 10 * n, 10 * n);
+    selectorKnob.setBounds(4 * n, 11 * n, 4 * n, 4 * n);
+}

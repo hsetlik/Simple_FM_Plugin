@@ -10,6 +10,7 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "AlgorithmSelectorComponent.h"
 
  class OperatorComponent : public juce::Component
 {

@@ -42,6 +42,7 @@ private:
     OperatorComponent op4;
     OperatorComponent op5;
     
+    AlgorithmSelectorComponent algSelector;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HexFmAudioProcessorEditor)
 };

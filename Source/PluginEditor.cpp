@@ -36,6 +36,8 @@ op5(5, this, this)
     OpComps.push_back(&op3);
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
+    
+    addAndMakeVisible(&algSelector);
 }
 
 HexFmAudioProcessorEditor::~HexFmAudioProcessorEditor()
@@ -59,6 +61,7 @@ void HexFmAudioProcessorEditor::resized()
     op0.setBounds(0, 0, quarterW, halfH);
     op1.setBounds(quarterW, 0, quarterW, halfH);
     op2.setBounds(2 * quarterW, 0, quarterW, halfH);
+    algSelector.setBounds(3 * quarterW, 0, quarterW, halfH);
     op3.setBounds(0, halfH, quarterW, halfH);
     op4.setBounds(quarterW, halfH, quarterW, halfH);
     op5.setBounds(2 * quarterW, halfH, quarterW, halfH);
