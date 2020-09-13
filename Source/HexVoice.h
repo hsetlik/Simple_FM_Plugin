@@ -36,31 +36,32 @@ class HexVoice : public juce::SynthesiserVoice
     //==============================================
     void attackSet(int index, std::atomic<float>* value)
     {
+        proc.allOps[index]->fAttack = *value;
         
     }
     void decaySet(int index, std::atomic<float>* value)
     {
-        
+        proc.allOps[index]->fDecay = *value;
     }
     void sustainSet(int index, std::atomic<float>* value)
     {
-        
+        proc.allOps[index]->fSustain = *value;
     }
     void releaseSet(int index, std::atomic<float>* value)
     {
-        
+        proc.allOps[index]->fRelease = *value;
     }
     void levelSet(int index, std::atomic<float>* value)
     {
-        
+        proc.allOps[index]->level = *value;
     }
     void ratioSet(int index, std::atomic<float>* value)
     {
-        
+        proc.allOps[index]->ratio = *value;
     }
     void modIndexSet(int index, std::atomic<float>* value)
     {
-        
+        proc.allOps[index]->modIndex = *value;
     }
     void outputSwitchSet(int index, std::atomic<float>* value)
     {
@@ -89,12 +90,17 @@ class HexVoice : public juce::SynthesiserVoice
                     juce::SynthesiserSound *sound,
                     int currentPitchWheelPosition)
     {
+        proc.newNote(midiNoteNumber);
+        proc.calculateLayers();
         
     }
     //=============================================
     void stopNote (float velocity, bool allowTailOff)
     {
-        
+        proc.endNote();
+        allowTailOff = true;
+        if(velocity == 0)
+            clearCurrentNote();
     }
     //===========================================
     void pitchWheelMoved(int newPitchWheelVal)
@@ -119,7 +125,18 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples)
     {
-        
+        for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
+        {
+            proc.setModValsByLayer();
+            proc.setAllFrequencies();
+            proc.applyEnvelopesAndLevels();
+            float outSample = proc.mixSample();
+            for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
+            {
+                outputBuffer.addSample(channel, startSample, outSample);
+            }
+            ++startSample;
+        }
     }
     //==============================================
     void setCurrentPlaybackSampleRate (double newRate)

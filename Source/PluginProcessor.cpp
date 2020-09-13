@@ -191,12 +191,22 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                 for(int n = 0; n < 6; ++n)
                 {
                     juce::String iStr = juce::String(n);
-                    for(int k = 0; k < 6; ++n)
+                    for(int k = 0; k < 6; ++k)
                     {
                         juce::String kStr = juce::String(k);
-                        thisVoice->modInputSet(n, k, tree.getRawParameterValue("mod" + kStr + "op" + iStr + "Param"));
+                        juce::String idString = "mod" + kStr + "op" + iStr + "Param";
+                        thisVoice->modInputSet(n, k, tree.getRawParameterValue(idString));
                     }
+                    thisVoice->attackSet(n, tree.getRawParameterValue("aParam" + iStr));
+                    thisVoice->decaySet(n, tree.getRawParameterValue("dParam" + iStr));
+                    thisVoice->sustainSet(n, tree.getRawParameterValue("sParam" + iStr));
+                    thisVoice->releaseSet(n, tree.getRawParameterValue("rParam" + iStr));
                     
+                    thisVoice->levelSet(n, tree.getRawParameterValue("levelParam" + iStr));
+                    thisVoice->modIndexSet(n, tree.getRawParameterValue("modIndexParam" + iStr));
+                    thisVoice->ratioSet(n, tree.getRawParameterValue("ratioParam" + iStr));
+                    
+                    thisVoice->outputSwitchSet(n, tree.getRawParameterValue("audioToggleParam" + iStr));
                 }
             }
         }

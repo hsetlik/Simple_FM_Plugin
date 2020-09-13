@@ -63,9 +63,6 @@ public:
     OperatorProcessor op3;
     OperatorProcessor op4;
     OperatorProcessor op5;
-    //all data for operator objects
-    //should be accessed and assigned via these pointers
-    OperatorProcessor* allOps[6] = {&op0, &op1, &op2, &op3, &op4, &op5};
     float fundamental;
     std::vector<OperatorProcessor*> layer0;
     std::vector<OperatorProcessor*> layer1;
@@ -73,4 +70,8 @@ public:
     std::vector<OperatorProcessor*> layer3;
     std::vector<OperatorProcessor*> layer4;
     std::vector<OperatorProcessor*> layer5;
+    //all data for operator objects
+    //should be accessed and assigned via these pointers
+    OperatorProcessor* allOps[6] = {&op0, &op1, &op2, &op3, &op4, &op5};
+    
 };

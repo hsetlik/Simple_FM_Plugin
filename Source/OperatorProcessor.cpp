@@ -76,11 +76,11 @@ void SetProcessor::calculateLayers()
     //finding the number of modulators and assigning the sources for each operator
     for(int i = 0; i < 6; ++i)
     {
+        allOps[i]->modSources.clear();
+        allOps[i]->totalDependencies = 0;
         int modCount = 0;
         for(int n = 0; n < 6; ++n)
         {
-            allOps[i]->modSources.clear();
-            allOps[i]->totalDependencies = 0;
             if(allOps[i]->takesInputFrom[n])
             {
                 modCount++;
@@ -218,4 +218,14 @@ float SetProcessor::mixSample()
             sample += allOps[i]->lastOutputSample;
     }
     return sample;
+}
+
+//=========================
+void SetProcessor::endNote()
+{
+    for(int i = 0; i < 6; ++i)
+    {
+        allOps[i]->envelope.trigger = 0;
+    }
+    
 }
