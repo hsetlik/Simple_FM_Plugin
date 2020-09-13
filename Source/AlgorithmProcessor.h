@@ -1,0 +1,46 @@
+/*
+  ==============================================================================
+
+    AlgorithmProcessor.h
+    Created: 13 Sep 2020 1:18:52pm
+    Author:  Hayden Setlik
+
+  ==============================================================================
+*/
+
+#pragma once
+
+#include <JuceHeader.h>
+#include "OperatorProcessor.h"
+#include "AlgorithmSelectorComponent.h"
+
+class AlgorithmProcessor
+{
+public:
+    //functions
+    AlgorithmProcessor();
+    ~AlgorithmProcessor() {}
+    void newNote(int midiNum);
+    void setLayersForCurrentAlg();
+    void setOutputsInLayerOrder();
+    float getAudibleSampleForAlg();
+    void endNote();
+    
+    //data
+    OperatorProcessor op0;
+    OperatorProcessor op1;
+    OperatorProcessor op2;
+    OperatorProcessor op3;
+    OperatorProcessor op4;
+    OperatorProcessor op5;
+    std::vector<OperatorProcessor*> allOps;
+    AlgorithmDiagram::algorithm currentAlg;
+    float fundamental;
+    std::vector<OperatorProcessor*> layer0;
+    std::vector<OperatorProcessor*> layer1;
+    std::vector<OperatorProcessor*> layer2;
+    std::vector<OperatorProcessor*> layer3;
+    std::vector<OperatorProcessor*> layer4;
+    std::vector<OperatorProcessor*> layer5;
+    
+};

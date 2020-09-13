@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "AlgorithmProcessor.h"
 
 class HexSound : public juce::SynthesiserSound
 {
@@ -33,17 +34,55 @@ class HexVoice : public juce::SynthesiserVoice
         return dynamic_cast<HexSound*>(sound) != nullptr;
     }
     //========================================
+    void setVoiceAttack(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->envelope.setAttack(*value);
+    }
+    void setVoiceDecay(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->envelope.setDecay(*value);
+    }
+    void setVoiceSustain(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->envelope.setSustain(*value);
+    }
+    void setVoiceRelease(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->envelope.setDecay(*value);
+    }
+    void setVoiceRatio(int index, std::atomic<float>* value)
+    {
+        float outValue;
+        if(*value > 0)
+            outValue = *value;
+        else
+            outValue = 1.0 / fabs(*value);
+        proc.allOps[index]->ratio = outValue;
+    }
+    void setVoiceIndex(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->modIndex = *value;
+    }
+    void setVoiceLevel(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->level = *value;
+    }
+    
     void startNote (int midiNoteNumber,
                     float velocity,
                     juce::SynthesiserSound *sound,
                     int currentPitchWheelPosition)
     {
-        
+        proc.newNote(midiNoteNumber);
+        proc.setLayersForCurrentAlg();
     }
     //=============================================
     void stopNote (float velocity, bool allowTailOff)
     {
-        
+        proc.endNote();
+        allowTailOff = true;
+        if(velocity == 0)
+            clearCurrentNote();
     }
     //===========================================
     void pitchWheelMoved(int newPitchWheelVal)
@@ -68,7 +107,16 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples)
     {
-        
+       for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
+        {
+            proc.setOutputsInLayerOrder();
+            float mixSample = proc.getAudibleSampleForAlg();
+            for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
+            {
+                outputBuffer.addSample(channel, startSample, mixSample);
+            }
+            ++startSample;
+        }
     }
     //==============================================
     void setCurrentPlaybackSampleRate (double newRate)
@@ -76,4 +124,5 @@ class HexVoice : public juce::SynthesiserVoice
         
     }
     //===============================================
+    AlgorithmProcessor proc;
 };

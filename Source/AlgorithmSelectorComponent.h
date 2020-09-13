@@ -10,25 +10,26 @@
 
 #pragma once
 #include <JuceHeader.h>
-enum algorithm
-{
-  alg1,
-  alg2
-  
-};
+
 
 class AlgorithmDiagram : public juce::Component
 {
 public:
+    enum algorithm
+    {
+      alg1,
+      alg2
+      
+    };
     //functions
-    AlgorithmDiagram(algorithm algSetting)
+    AlgorithmDiagram(AlgorithmDiagram::algorithm algSetting)
     {
         currentAlg = algSetting;
     }
     ~AlgorithmDiagram() {}
     void paint(juce::Graphics& g) override;
     void resized() override;
-    algorithm currentAlg;
+    AlgorithmDiagram::algorithm currentAlg;
     juce::Rectangle<int> opBox[6];
 };
 class AlgorithmSelectorComponent : public juce::Component
@@ -37,7 +38,7 @@ public:
     //functions
     AlgorithmSelectorComponent();
     ~AlgorithmSelectorComponent() {}
-    algorithm currentAlg = alg1;
+    AlgorithmDiagram::algorithm currentAlg = AlgorithmDiagram::alg1;
     void resized() override;
     //child componenets
     juce::Slider selectorKnob;

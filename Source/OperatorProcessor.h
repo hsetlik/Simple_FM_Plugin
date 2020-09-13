@@ -16,16 +16,17 @@ class OperatorProcessor
 {
 public:
     //functions
-    OperatorProcessor(int index)
+    OperatorProcessor(int index, float* fund)
     {
         opIndex = index;
+        fundamental = fund;
     }
     ~OperatorProcessor() {}
     //data
     maxiEnv envelope;
     maxiOsc oscillator;
     int opIndex;
-    float fundamental;
+    float* fundamental;
     float modValue;
     float ratio;
     float modIndex;
@@ -33,10 +34,11 @@ public:
     float lastOutputSample;
     float getSample()
     {
-        float baseFreq = fundamental * ratio;
+        float baseFreq = *fundamental * ratio;
         float modOffset = modValue * modIndex;
         double preEnv = oscillator.sinewave(baseFreq + modOffset);
-        double postEnv =  envelope.adsr(preEnv);
-        return postEnv * level;
+        double postEnv =  envelope.adsr(preEnv, envelope.trigger);
+        lastOutputSample = postEnv * level;
+        return lastOutputSample;
     }
 };

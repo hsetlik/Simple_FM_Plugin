@@ -54,12 +54,14 @@ void AlgorithmDiagram::paint(juce::Graphics &g)
             juce::Rectangle<int> line3 = {4 * n, 8 * n, n, n};
             juce::Rectangle<int> line4 = {6 * n, 10 * n, n, n};
             juce::Rectangle<int> line5 = {10 * n, 10 * n, n, n};
+            juce::Rectangle<int> line6 = {8 * n, 8 * n, n, n};
             
             g.fillRect(line1);
             g.fillRect(line2);
             g.fillRect(line3);
             g.fillRect(line4);
             g.fillRect(line5);
+            g.fillRect(line6);
             
         }
         case alg2:
@@ -96,6 +98,7 @@ void AlgorithmDiagram::paint(juce::Graphics &g)
             juce::Rectangle<int> line3 = {6 * n, (int)4.9 * n, n, (int)0.2 * n};
             juce::Rectangle<int> line4 = {(int)7.9 * n, 6 * n, (int)0.2 * n, n};
             juce::Rectangle<int> line5 = {3 * n, (int)7.9 * n, n, (int)0.2 * n};
+            
             /*
             g.fillRect(line1);
             g.fillRect(line2);
