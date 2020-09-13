@@ -97,5 +97,27 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 
 void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
 {
+    juce::String buttonId;
     printf("button clicked\n");
+    //figure out which button was clicked
+    for(int i = 0; i < 6; ++i)
+    {
+        auto iStr = juce::String(i);
+        for (int n = 0; n < 6; ++n)
+        {
+            auto nStr = juce::String(n);
+            if (button == &OpComps[i]->modToggleButtons[n])
+                buttonId = "mod" + nStr + "op" + iStr + "Param";
+        }
+        if(button == &OpComps[i]->audioToggleButton)
+            buttonId = "audioToggleParam" + iStr;
+    }
+    // buttonId is now equal to the parameter name of the button's parameter
+    auto buttonParam = audioProcessor.tree.getParameter(buttonId);
+    float valToAssign = 0.0f;
+    if(button->getToggleState())
+        valToAssign = 1.0f;
+    else
+        valToAssign = 0.0f;
+    buttonParam->setValue(valToAssign);
 }

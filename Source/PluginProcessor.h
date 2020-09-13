@@ -56,7 +56,7 @@ public:
     HexVoice* thisVoice;
     juce::AudioProcessorValueTreeState tree;
 private:
-    juce::Synthesiser HexSynth;
+    juce::Synthesiser thisSynth;
     double lastSampleRate;
     
     //==============================================================================

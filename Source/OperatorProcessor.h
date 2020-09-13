@@ -25,15 +25,19 @@ public:
     float getOutputSample();
     //data
     int opIndex;
+    int totalDependencies;
     maxiEnv envelope;
     maxiOsc oscillator;
     float fAttack, fDecay, fSustain, fRelease;
+    int numModulators;
     int modLayer;
     float modIndex;
     float ratio;
     float lastOutputSample;
+    float level;
     bool takesInputFrom[6];
-    std::vector<float> modSourceValues;
+    bool isAudible;
+    std::vector<OperatorProcessor*> modSources;
     float modValue; 
     float frequency;
     float* fundamental;
@@ -45,10 +49,13 @@ public:
     //functions
     SetProcessor();
     ~SetProcessor(){}
-    void newNote();
+    void newNote(int midiNumber);
     void calculateLayers();
-    void setAllEnvelopes();
     void setModValsByLayer();
+    void setAllFrequencies();
+    void applyEnvelopesAndLevels();
+    float mixSample();
+    void endNote();
     //data
     OperatorProcessor op0;
     OperatorProcessor op1;

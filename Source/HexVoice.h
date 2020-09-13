@@ -11,6 +11,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "OperatorProcessor.h"
 
 class HexSound : public juce::SynthesiserSound
 {
@@ -32,6 +33,56 @@ class HexVoice : public juce::SynthesiserVoice
     {
         return dynamic_cast<HexSound*>(sound) != nullptr;
     }
+    //==============================================
+    void attackSet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void decaySet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void sustainSet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void releaseSet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void levelSet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void ratioSet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void modIndexSet(int index, std::atomic<float>* value)
+    {
+        
+    }
+    void outputSwitchSet(int index, std::atomic<float>* value)
+    {
+        bool isOn;
+        if(*value > 0.5f)
+            isOn = true;
+        else
+            isOn = false;
+        proc.allOps[index]->isAudible = isOn;
+    }
+    void modInputSet(int iIndex, int nIndex, std::atomic<float>* value)
+    {
+        bool isOn;
+        if(*value > 0.5f)
+        {
+            isOn = true;
+        }
+        else
+            isOn = false;
+        proc.allOps[iIndex]->takesInputFrom[nIndex] = isOn;
+    }
+    
     //========================================
     void startNote (int midiNoteNumber,
                     float velocity,
@@ -76,4 +127,6 @@ class HexVoice : public juce::SynthesiserVoice
         
     }
     //===============================================
+    
+    SetProcessor proc;
 };
