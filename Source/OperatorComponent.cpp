@@ -48,7 +48,6 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     rSlider.addListener(sliderLstnr);
     addAndMakeVisible(&rSlider);
     rSlider.setNumDecimalPlacesToDisplay(1);
-    
     //setting up ratio slider
     ratioSlider.setSliderStyle(juce::Slider::Rotary);
     ratioSlider.setRange(-10.0f, 10.0f);
