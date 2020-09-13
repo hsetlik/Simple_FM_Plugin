@@ -72,9 +72,6 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     modIndexSlider.addListener(sliderLstnr);
     addAndMakeVisible(&modIndexSlider);
     modIndexSlider.setNumDecimalPlacesToDisplay(1);
-    
-    
-    
 }
 
 void OperatorComponent::resized()
