@@ -23,8 +23,6 @@ public:
     juce::Slider::Listener* sliderLstnr;
     juce::Button::Listener* buttonLstnr;
     //child components & attachments
-    juce::TextButton modToggleButtons[6];
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> modToggleAttachments[6];
     juce::Slider aSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> aSliderAttach;
     juce::Slider dSlider;

@@ -16,17 +16,6 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     OpComponentIndex = index;
     sliderLstnr = sLstnr;
     buttonLstnr = bLstnr;
-    //setting up modulator source toggles
-    for(int i = 0; i < 6; ++i)
-    {
-        modToggleButtons[i].setClickingTogglesState(true);
-        modToggleButtons[i].setButtonText(juce::String(i + 1));
-        modToggleButtons[i].changeWidthToFitText();
-        modToggleButtons[i].setColour(modToggleButtons[i].buttonColourId, juce::Colours::lightgrey);
-        modToggleButtons[i].setColour(modToggleButtons[i].buttonOnColourId, juce::Colours::lightgreen);
-        modToggleButtons[i].addListener(buttonLstnr);
-        addAndMakeVisible(&modToggleButtons[i]);
-    }
     //setting up envelope knobs
     aSlider.setSliderStyle(juce::Slider::Rotary);
     aSlider.setRange(1.0f, 5000.0);
@@ -96,12 +85,6 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
 void OperatorComponent::resized()
 {
     int n = getHeight() / 18;
-    modToggleButtons[0].setBounds(n, n, 2 * n, 2 * n);
-    modToggleButtons[1].setBounds(n, 3 * n, 2 * n, 2 * n);
-    modToggleButtons[2].setBounds(n, 5 * n, 2 * n, 2 * n);
-    modToggleButtons[3].setBounds(n, 7 * n, 2 * n, 2 * n);
-    modToggleButtons[4].setBounds(n, 9 * n, 2 * n, 2 * n);
-    modToggleButtons[5].setBounds(n, 11 * n, 2 * n, 2 * n);
     
     aSlider.setBounds(4 * n, n, 4.5 * n, 4.5 * n);
     dSlider.setBounds(7 * n, n, 4.5 * n, 4.5 * n);
