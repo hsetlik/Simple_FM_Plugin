@@ -31,8 +31,6 @@ public:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> sSliderAttach;
     juce::Slider rSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> rSliderAttach;
-    juce::TextButton audioToggleButton;
-    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> audioToggleAttach;
     juce::Slider levelSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> levelSliderAttach;
     juce::Slider modIndexSlider;

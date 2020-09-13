@@ -53,15 +53,15 @@ void HexFmAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    int thirdW = getWidth() / 3;
+    int quarterW = getWidth() / 4;
     int halfH = getHeight() / 2;
     
-    op0.setBounds(0, 0, thirdW, halfH);
-    op1.setBounds(thirdW, 0, thirdW, halfH);
-    op2.setBounds(2 * thirdW, 0, thirdW, halfH);
-    op3.setBounds(0, halfH, thirdW, halfH);
-    op4.setBounds(thirdW, halfH, thirdW, halfH);
-    op5.setBounds(2 * thirdW, halfH, thirdW, halfH);
+    op0.setBounds(0, 0, quarterW, halfH);
+    op1.setBounds(quarterW, 0, quarterW, halfH);
+    op2.setBounds(2 * quarterW, 0, quarterW, halfH);
+    op3.setBounds(0, halfH, quarterW, halfH);
+    op4.setBounds(quarterW, halfH, quarterW, halfH);
+    op5.setBounds(2 * quarterW, halfH, quarterW, halfH);
     
 }
 
