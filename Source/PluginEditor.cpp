@@ -109,64 +109,123 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         int iValue = (int)fValue;
         if(iValue == 1)
         {
-            *audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg1;
+            audioProcessor.thisVoice->proc.procAlgIndex = 1;
             algSelector.selectorKnob.setValue(1);
         }
         else if(iValue > 1)
         {
-            *audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg2;
+            audioProcessor.thisVoice->proc.procAlgIndex = 2;
             algSelector.selectorKnob.setValue(2);
         }
         algSelector.diagram.repaint();
         
-        juce::String enumStr[2];
-        enumStr[0] = "alg1";
-        enumStr[1] = "alg2";
-        
-        juce::String cAlgStr = enumStr[*audioProcessor.thisVoice->proc.currentAlg];
-        const char* outString = cAlgStr.toUTF8();
-        printf("current alg: %s\n", outString);
     }
     for(int i = 0; i < 6; ++i)
     {
         if(slider == &OpComps[i]->aSlider)
         {
-            auto aStr = OpComps[i]->aSlider.getTextFromValue(OpComps[i]->aSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->aSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 2;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->aSlider.getTextFromValue(OpComps[i]->aSlider.getValue()).substring(0, strLen);
             OpComps[i]->aSliderLabel.setText("A: "+ aStr, juce::dontSendNotification);
         }
         else if(slider == &OpComps[i]->dSlider)
         {
-          auto aStr = OpComps[i]->dSlider.getTextFromValue(OpComps[i]->dSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->dSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 2;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->dSlider.getTextFromValue(OpComps[i]->dSlider.getValue()).substring(0, strLen);
             OpComps[i]->dSliderLabel.setText("D: "+ aStr, juce::dontSendNotification);
         }
         else if(slider == &OpComps[i]->sSlider)
         {
             printf("sustain slider moved\n");
-            auto aStr = OpComps[i]->sSlider.getTextFromValue(OpComps[i]->sSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->sSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 3;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->sSlider.getTextFromValue(OpComps[i]->sSlider.getValue()).substring(0, strLen);
             OpComps[i]->sSliderLabel.setText("S: "+ aStr, juce::dontSendNotification);
             
         }
         else if(slider == &OpComps[i]->rSlider)
         {
-            auto aStr = OpComps[i]->rSlider.getTextFromValue(OpComps[i]->rSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->rSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 2;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->rSlider.getTextFromValue(OpComps[i]->rSlider.getValue()).substring(0, strLen);
             OpComps[i]->rSliderLabel.setText("R: "+ aStr, juce::dontSendNotification);
             
         }
         else if(slider == &OpComps[i]->ratioSlider)
         {
             printf("ratio slider moved\n");
-            auto aStr = OpComps[i]->ratioSlider.getTextFromValue(OpComps[i]->ratioSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->ratioSlider.getValue();
+            int strLen;
+            if(aFlt < 1)
+                strLen = 4;
+            else if(aFlt < 10)
+                strLen = 3;
+            else if(aFlt < 100)
+                strLen = 4;
+            else if(aFlt < 1000)
+                strLen = 4;
+            else
+                strLen = 5;
+            auto aStr = OpComps[i]->ratioSlider.getTextFromValue(OpComps[i]->ratioSlider.getValue()).substring(0, strLen);
             OpComps[i]->ratioLabel.setText("Ratio: " + aStr, juce::dontSendNotification);
         }
         else if(slider == &OpComps[i]->modIndexSlider)
         {
-            auto aStr = OpComps[i]->modIndexSlider.getTextFromValue(OpComps[i]->modIndexSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->modIndexSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 3;
+            else if(aFlt < 100)
+                strLen = 3;
+            else if(aFlt < 1000)
+                strLen = 4;
+            else
+                strLen = 5;
+            auto aStr = OpComps[i]->modIndexSlider.getTextFromValue(aFlt).substring(0, aFlt);
             OpComps[i]->indexLabel.setText("Mod Index: " + aStr, juce::dontSendNotification);
             
         }
         else if(slider == &OpComps[i]->levelSlider)
         {
-            auto aStr = OpComps[i]->levelSlider.getTextFromValue(OpComps[i]->levelSlider.getValue()).substring(0, 3);
+            auto aFlt = OpComps[i]->levelSlider.getValue();
+            int strLen = 0;
+            if(aFlt < 10)
+                strLen = 3;
+            auto aStr = OpComps[i]->levelSlider.getTextFromValue(aFlt).substring(0, strLen);
             OpComps[i]->levelLabel.setText("Level: " + aStr, juce::dontSendNotification);
             
         }

@@ -9,7 +9,7 @@
 */
 
 #include "AlgorithmProcessor.h"
-AlgorithmProcessor::AlgorithmProcessor(AlgorithmSelectorComponent* comp) : op0(0, &fundamental), op1(1, &fundamental), op2(2, &fundamental), op3(3, &fundamental), op4(4, &fundamental), op5(5, &fundamental)
+AlgorithmProcessor::AlgorithmProcessor() : op0(0, &fundamental), op1(1, &fundamental), op2(2, &fundamental), op3(3, &fundamental), op4(4, &fundamental), op5(5, &fundamental)
 {
     allOps.push_back(&op0);
     allOps.push_back(&op1);
@@ -18,7 +18,7 @@ AlgorithmProcessor::AlgorithmProcessor(AlgorithmSelectorComponent* comp) : op0(0
     allOps.push_back(&op4);
     allOps.push_back(&op5);
     
-    currentAlg = &comp->diagram.curAlg;
+    procAlgIndex = 1;
 }
 
 void AlgorithmProcessor::newNote(double fund)
@@ -32,9 +32,9 @@ void AlgorithmProcessor::newNote(double fund)
 
 void AlgorithmProcessor::setLayersForCurrentAlg()
 {
-   switch(*currentAlg)
+   switch(procAlgIndex)
    {
-       case AlgorithmDiagram::alg1:
+       case 1:
        {
            layer0 = allOps[0];
            layer1 = allOps[1];
@@ -43,7 +43,7 @@ void AlgorithmProcessor::setLayersForCurrentAlg()
            layer4 = allOps[2];
            layer5 = allOps[5];
        }
-       case AlgorithmDiagram::alg2:
+       case 2:
        {
          layer0 = allOps[0];
          layer1 = allOps[1];
@@ -57,9 +57,9 @@ void AlgorithmProcessor::setLayersForCurrentAlg()
 
 void AlgorithmProcessor::setModValues()
 {
-    switch(*currentAlg)
+    switch(procAlgIndex)
     {
-        case AlgorithmDiagram::alg1:
+        case 1:
         {
             allOps[0]->modValue = 0.0f;
             allOps[1]->modValue = allOps[0]->lastOutputSample;
@@ -69,7 +69,7 @@ void AlgorithmProcessor::setModValues()
             allOps[5]->modValue = allOps[2]->lastOutputSample;
             
         }
-        case AlgorithmDiagram::alg2:
+        case 2:
         {
             allOps[0]->modValue = 0.0f;
             allOps[1]->modValue = allOps[0]->lastOutputSample;
@@ -112,9 +112,9 @@ void AlgorithmProcessor::setOutputsInLayerOrder()
 float AlgorithmProcessor::getAudibleSampleForAlg()
 {
     setOutputsInLayerOrder();
-    switch(*currentAlg)
+    switch(procAlgIndex)
     {
-        case AlgorithmDiagram::alg1:
+        case 1:
         {
             float outSample = 0.0f;
             outSample += allOps[4]->lastOutputSample;
@@ -123,7 +123,7 @@ float AlgorithmProcessor::getAudibleSampleForAlg()
             return outSample;
             
         }
-        case AlgorithmDiagram::alg2:
+        case 2:
         {
             float outSample = 0.0f;
             outSample += allOps[4]->lastOutputSample;

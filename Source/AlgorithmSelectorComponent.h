@@ -15,23 +15,17 @@
 class AlgorithmDiagram : public juce::Component
 {
 public:
-    enum algorithm
-    {
-      alg1,
-      alg2
-      
-    };
     //functions
-    AlgorithmDiagram(AlgorithmDiagram::algorithm algSetting)
+    AlgorithmDiagram()
     {
-        curAlg = algSetting;
+      
     }
     ~AlgorithmDiagram() {}
     void paint(juce::Graphics& g) override;
     void paintAlg1(juce::Graphics& g);
     void paintAlg2(juce::Graphics& g);
     void resized() override;
-    AlgorithmDiagram::algorithm curAlg = alg2; //setting the default algorithm to 1
+    int currentAlgIndex = 1; //setting the default algorithm to 1
     juce::Rectangle<int> opBox[6];
 };
 class AlgorithmSelectorComponent : public juce::Component

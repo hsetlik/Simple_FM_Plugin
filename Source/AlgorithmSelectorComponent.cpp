@@ -11,12 +11,12 @@
 #include "AlgorithmSelectorComponent.h"
 void AlgorithmDiagram::paint(juce::Graphics &g)
 {
-    switch(curAlg)
+    switch(currentAlgIndex)
     {
-        case alg1:
+        case 1:
             paintAlg1(g);
             break;
-        case alg2:
+        case 2:
             paintAlg2(g);
             break;
     }
@@ -133,7 +133,7 @@ void AlgorithmDiagram::resized()
 
 
 
-AlgorithmSelectorComponent::AlgorithmSelectorComponent() : diagram(AlgorithmDiagram::alg1)
+AlgorithmSelectorComponent::AlgorithmSelectorComponent()
 {
     selectorKnob.setSliderStyle(juce::Slider::IncDecButtons);
     //int initAlg = (int)selectorKnob.getValue();

@@ -74,9 +74,9 @@ class HexVoice : public juce::SynthesiserVoice
         //printf("setting voice algorithm: %f\n", fValue);
         int setting = (int)fValue;
         if(setting == 1)
-            *proc.currentAlg = AlgorithmDiagram::alg1;
+            proc.procAlgIndex = 1;
         else if(setting == 2)
-            *proc.currentAlg = AlgorithmDiagram::alg2;
+            proc.procAlgIndex = 2;
     }
     
     void startNote (int midiNoteNumber,

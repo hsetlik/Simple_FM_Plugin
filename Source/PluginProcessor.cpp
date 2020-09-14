@@ -41,7 +41,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         layout.add(std::make_unique<juce::AudioParameterFloat>
         (ssId, ssName, 0.0f, 1.0f, 0.6f));
         layout.add(std::make_unique<juce::AudioParameterFloat>
-                   (rsId, rsName, 100.0f, 4000.0f, 8.0f));
+                   (rsId, rsName, 1.0f, 4000.0f, 100.0f));
         
         layout.add(std::make_unique<juce::AudioParameterFloat>(indexId, indexName, 1.0f, 500.0f, 1.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
