@@ -54,9 +54,13 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
     
     HexVoice* thisVoice;
+    HexVoice* lowestActive;
+    int lowestActiveInt;
     juce::AudioProcessorValueTreeState tree;
-private:
     juce::Synthesiser HexSynth;
+    float currentLevels[6];
+private:
+    
     double lastSampleRate;
     
     //==============================================================================

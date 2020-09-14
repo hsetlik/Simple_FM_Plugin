@@ -23,6 +23,7 @@ public:
     //non-component data
     int OpComponentIndex;
     
+    
     juce::Slider::Listener* sliderLstnr;
     //child components & attachments
     juce::Slider aSlider;
@@ -52,4 +53,10 @@ public:
     juce::Slider ratioSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> ratioSliderAttach;
     juce::Label ratioLabel;
+    
+    juce::Slider ratioNumSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> ratioNumSliderAttach;
+    
+    juce::Slider ratioDenSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> ratioDenSliderAttach;
 };

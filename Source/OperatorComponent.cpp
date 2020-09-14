@@ -72,9 +72,9 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr)
     ratioSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 50, 20);
     ratioSlider.setValue(1.0);
     ratioSlider.addListener(sliderLstnr);
-    addAndMakeVisible(&ratioSlider);
+    //addAndMakeVisible(&ratioSlider);
     ratioSlider.setNumDecimalPlacesToDisplay(1);
-    addAndMakeVisible(ratioLabel);
+    //addAndMakeVisible(ratioLabel);
     auto rLabelStr1 = ratioSlider.getTextFromValue(ratioSlider.getValue());
     auto rLabelStr2 = rLabelStr1.substring(0, 4);
     ratioLabel.setText("Ratio: " + rLabelStr2, juce::dontSendNotification);
@@ -114,7 +114,15 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr)
     addAndMakeVisible(&modIndexSlider);
     modIndexSlider.setNumDecimalPlacesToDisplay(1);
     
+    addAndMakeVisible(ratioNumSlider);
+    ratioNumSlider.setSliderStyle(juce::Slider::IncDecButtons);
+    ratioNumSlider.setTextBoxStyle(juce::Slider::TextBoxAbove, false, 50, 20);
+    ratioNumSlider.setRange(1, 15, 1);
     
+    addAndMakeVisible(ratioDenSlider);
+    ratioDenSlider.setSliderStyle(juce::Slider::IncDecButtons);
+    ratioDenSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 20);
+    ratioDenSlider.setRange(1, 15, 1);
 }
 
 void OperatorComponent::paint(juce::Graphics &g)
@@ -128,6 +136,13 @@ void OperatorComponent::paint(juce::Graphics &g)
     g.setColour(juce::Colours::lightseagreen);
     auto labelString = juce::String(OpComponentIndex + 1);
     g.drawText(labelString, numberLabel, juce::Justification::centred, false);
+    
+    /*
+    juce::Rectangle<int> levelBar;
+    auto currentScale = *barLevel;
+    levelBar.setBounds(n / 2, 16 * n, 6 * n * currentScale, n);
+    g.fillRect(levelBar);
+     */
 }
 
 void OperatorComponent::resized()
@@ -141,6 +156,8 @@ void OperatorComponent::resized()
     
     ratioLabel.setBounds(n / 3, n / 10, 5 * n,  n);
     ratioSlider.setBounds(n, n, 4 * n, 4 * n);
+    ratioNumSlider.setBounds(n, n / 3, 4 * n, 2.5 * n);
+    ratioDenSlider.setBounds(n, 3 * n, 4 * n, 2.5 * n);
     
     indexLabel.setBounds(n / 3, 5.5 * n, 5 * n, 2 * n);
     modIndexSlider.setBounds(n, 7 * n, 4 * n, 4 * n);

@@ -34,6 +34,15 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         auto levelId = "levelParam" + iStr;
         auto levelName = "Operator " + iStr + " Level";
         
+        auto rNumId = "ratioNumParam" + iStr;
+        auto rNumName = "Freq ratio " + iStr + " numerator";
+        
+        auto rDenId = "ratioDenParam" + iStr;
+        auto rDenName = "Freq ratio " + iStr + " denominator";
+        
+        layout.add(std::make_unique<juce::AudioParameterFloat>(rNumId, rNumName, 1, 15, 1));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(rDenId, rDenName, 1, 15, 1));
+        
         layout.add(std::make_unique<juce::AudioParameterFloat>
                    (asId, asName, 15.0f, 4000.0f, 8.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>
@@ -194,7 +203,8 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                    thisVoice->setVoiceSustain(n, tree.getRawParameterValue("sustainParam" + iStr));
                    thisVoice->setVoiceRelease(n, tree.getRawParameterValue("releaseParam" + iStr));
                    thisVoice->setVoiceIndex(n, tree.getRawParameterValue("modIndexParam" + iStr));
-                   thisVoice->setVoiceRatio(n, tree.getRawParameterValue("ratioParam" + iStr));
+                   thisVoice->setVoiceRatio(n, tree.getRawParameterValue("ratioNumParam" + iStr),
+                                            tree.getRawParameterValue("ratioDenParam" + iStr));
                    thisVoice->setVoiceLevel(n, tree.getRawParameterValue("levelParam" + iStr));
                }
            }

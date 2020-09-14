@@ -50,14 +50,11 @@ class HexVoice : public juce::SynthesiserVoice
     {
         proc.allOps[index]->envelope.setRelease(*value);
     }
-    void setVoiceRatio(int index, std::atomic<float>* value)
+    void setVoiceRatio(int index, std::atomic<float>* nvalue, std::atomic<float>* dvalue)
     {
-        float outValue;
-        if(*value > 0)
-            outValue = *value;
-        else
-            outValue = 1.0 / fabs(*value);
-        proc.allOps[index]->ratio = outValue;
+        auto num = fabs(*nvalue);
+        auto den = fabs(*dvalue);
+        proc.allOps[index]->ratio = (num / den);
     }
     void setVoiceIndex(int index, std::atomic<float>* value)
     {
@@ -80,9 +77,7 @@ class HexVoice : public juce::SynthesiserVoice
         else if(setting == 3)
             proc.procAlgIndex = 3;
         proc.setLayersForCurrentAlg();
-        
     }
-    
     void startNote (int midiNoteNumber,
                     float velocity,
                     juce::SynthesiserSound *sound,
@@ -128,7 +123,6 @@ class HexVoice : public juce::SynthesiserVoice
         {
             proc.setModValues();
             float mixSample = proc.getAudibleSampleForAlg();
-            
             for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, mixSample);
@@ -144,5 +138,14 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     AlgorithmProcessor proc;
     double fundamental;
+    
+    juce::AudioBuffer<float> opBuffers[6] = {
+        juce::AudioBuffer<float>(1, 512),
+        juce::AudioBuffer<float>(1, 512),
+        juce::AudioBuffer<float>(1, 512),
+        juce::AudioBuffer<float>(1, 512),
+        juce::AudioBuffer<float>(1, 512),
+        juce::AudioBuffer<float>(1, 512)};
+    
 
 };

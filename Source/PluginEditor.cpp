@@ -66,6 +66,19 @@ op5(5, this)
         
         OpComps[i]->levelSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "levelParam" + iStr,
         OpComps[i]->levelSlider));
+        
+        OpComps[i]->ratioNumSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioNumParam" + iStr,
+        OpComps[i]->ratioNumSlider));
+        
+        OpComps[i]->ratioDenSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioDenParam" + iStr,
+        OpComps[i]->ratioDenSlider));
+        
+        juce::Range<double> rnRange = {1, 15};
+        OpComps[i]->ratioNumSlider.setRange(rnRange, 1.0);
+        
+        juce::Range<double> rdRange = {1, 15};
+        OpComps[i]->ratioDenSlider.setRange(rdRange, 1.0);
+        
     }
     
 }
@@ -79,12 +92,13 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    
 }
 
 void HexFmAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
-    // subcomponents in your editor..
+    // subcomponents in your editor...
     int quarterW = getWidth() / 4;
     int halfH = getHeight() / 2;
     
