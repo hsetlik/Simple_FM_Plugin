@@ -10,17 +10,18 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "AlgorithmObjectSet.h"
 
 
-class AlgorithmDiagram : public juce::Component
+class AlgorithmDiagramSet : public juce::Component
 {
 public:
     //functions
-    AlgorithmDiagram()
+    AlgorithmDiagramSet()
     {
       
     }
-    ~AlgorithmDiagram() {}
+    ~AlgorithmDiagramSet() {}
     void paint(juce::Graphics& g) override;
     void paintAlg1(juce::Graphics& g);
     void paintAlg2(juce::Graphics& g);
@@ -38,5 +39,5 @@ public:
     //child componenets
     juce::Slider selectorKnob;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> selectorKnobAttach;
-    AlgorithmDiagram diagram;
+    AlgorithmDiagramSet diagram;
 };

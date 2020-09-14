@@ -104,21 +104,11 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         algSelector.selectorKnob.setRange(1.0, 2.0, 1.0);
         auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
         float fValue = algSelector.selectorKnob.getValue();
+        printf("fValue: %f\n", fValue);
         algSelector.selectorKnob.setNumDecimalPlacesToDisplay(0);
-        //algSelector.selectorKnob.setRange(1.0f, 2.0f, 1.0f);
         int iValue = (int)fValue;
-        if(iValue == 1)
-        {
-            audioProcessor.thisVoice->proc.procAlgIndex = 1;
-            algSelector.selectorKnob.setValue(1);
-        }
-        else if(iValue > 1)
-        {
-            audioProcessor.thisVoice->proc.procAlgIndex = 2;
-            algSelector.selectorKnob.setValue(2);
-        }
-        algSelector.diagram.repaint();
-        
+        printf("iValue: %d\n\n", iValue);
+        algSelector.diagram.currentAlgIndex = iValue;
     }
     for(int i = 0; i < 6; ++i)
     {

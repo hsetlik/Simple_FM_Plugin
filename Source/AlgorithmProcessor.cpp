@@ -131,6 +131,8 @@ float AlgorithmProcessor::getAudibleSampleForAlg()
             outSample += allOps[5]->lastOutputSample;
             return outSample;
         }
+        default:
+            return 0.0f;
     }
 }
 

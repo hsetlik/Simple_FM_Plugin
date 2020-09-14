@@ -9,20 +9,15 @@
 */
 
 #include "AlgorithmSelectorComponent.h"
-void AlgorithmDiagram::paint(juce::Graphics &g)
+void AlgorithmDiagramSet::paint(juce::Graphics &g)
 {
-    switch(currentAlgIndex)
-    {
-        case 1:
-            paintAlg1(g);
-            break;
-        case 2:
-            paintAlg2(g);
-            break;
-    }
+    if(currentAlgIndex == 1)
+        paintAlg1(g);
+    else if(currentAlgIndex == 2)
+        paintAlg2(g);
 }
 
-void AlgorithmDiagram::paintAlg1(juce::Graphics &g)
+void AlgorithmDiagramSet::paintAlg1(juce::Graphics &g)
 {
     int n = getHeight() / 18;
     g.fillAll(juce::Colours::whitesmoke);
@@ -75,7 +70,7 @@ void AlgorithmDiagram::paintAlg1(juce::Graphics &g)
     printf("painted alg1\n");
 }
 
-void AlgorithmDiagram::paintAlg2(juce::Graphics &g)
+void AlgorithmDiagramSet::paintAlg2(juce::Graphics &g)
 {
     int n = getHeight() / 18;
     g.fillAll(juce::Colours::whitesmoke);
@@ -126,7 +121,7 @@ void AlgorithmDiagram::paintAlg2(juce::Graphics &g)
     printf("painted alg2\n");
 }
 
-void AlgorithmDiagram::resized()
+void AlgorithmDiagramSet::resized()
 {
 
 }
