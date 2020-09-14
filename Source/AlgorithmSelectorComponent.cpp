@@ -115,12 +115,14 @@ void AlgorithmDiagram::resized()
 
 
 
-AlgorithmSelectorComponent::AlgorithmSelectorComponent() : diagram(currentAlg)
+AlgorithmSelectorComponent::AlgorithmSelectorComponent() : diagram(AlgorithmDiagram::alg1)
 {
     selectorKnob.setSliderStyle(juce::Slider::IncDecButtons);
+    //int initAlg = (int)selectorKnob.getValue();
+    
     selectorKnob.setRange(1.0, 2.0, 1.0);
     selectorKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
-    selectorKnob.setNumDecimalPlacesToDisplay(0);
+    selectorKnob.setNumDecimalPlacesToDisplay(1);
     addAndMakeVisible(&selectorKnob);
     addAndMakeVisible(&diagram);
 }

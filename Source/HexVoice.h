@@ -68,6 +68,17 @@ class HexVoice : public juce::SynthesiserVoice
         proc.allOps[index]->level = *value;
     }
     
+    void setVoiceAlgorithm(std::atomic<float>* value)
+    {
+        float fValue = (float)*value;
+        //printf("setting voice algorithm: %f\n", fValue);
+        int setting = (int)fValue;
+        if(setting == 1)
+            proc.currentAlg = AlgorithmDiagram::alg1;
+        else if(setting == 2)
+            proc.currentAlg = AlgorithmDiagram::alg2;
+    }
+    
     void startNote (int midiNoteNumber,
                     float velocity,
                     juce::SynthesiserSound *sound,

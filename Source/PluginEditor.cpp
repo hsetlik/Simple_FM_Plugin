@@ -36,7 +36,9 @@ op5(5, this, this)
     OpComps.push_back(&op3);
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
+    
     addAndMakeVisible(&algSelector);
+    algSelector.selectorKnob.addListener(this);
     
     algSelector.selectorKnobAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "algorithmParam", algSelector.selectorKnob));
     
@@ -97,6 +99,33 @@ void HexFmAudioProcessorEditor::resized()
 
 void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
+    if(slider == &algSelector.selectorKnob)
+    {
+        algSelector.selectorKnob.setRange(1.0, 2.0, 1.0);
+        auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
+        float fValue = algSelector.selectorKnob.getValue();
+        printf("getValue() returns: %f\n", fValue);
+        //algSelector.selectorKnob.setRange(1.0f, 2.0f, 1.0f);
+        int iValue = (int)fValue;
+        printf("iValue: %d\n", iValue);
+        if(iValue == 1)
+        {
+            audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg1;
+            algSelector.selectorKnob.setValue(1);
+        }
+        else if(iValue > 1)
+        {
+            audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg2;
+            algSelector.selectorKnob.setValue(2);
+        }
+        juce::String enumStr[2];
+        enumStr[0] = "alg1";
+        enumStr[1] = "alg2";
+        
+        juce::String cAlgStr = enumStr[audioProcessor.thisVoice->proc.currentAlg];
+        const char* outString = cAlgStr.toUTF8();
+        printf("current alg: %s\n", outString);
+    }
     for(int i = 0; i < 6; ++i)
     {
         if(slider == &OpComps[i]->aSlider)
@@ -111,6 +140,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         }
         else if(slider == &OpComps[i]->sSlider)
         {
+            printf("sustain slider moved\n");
             auto aStr = OpComps[i]->sSlider.getTextFromValue(OpComps[i]->sSlider.getValue()).substring(0, 3);
             OpComps[i]->sSliderLabel.setText("S: "+ aStr, juce::dontSendNotification);
             
@@ -123,6 +153,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         }
         else if(slider == &OpComps[i]->ratioSlider)
         {
+            printf("ratio slider moved\n");
             auto aStr = OpComps[i]->ratioSlider.getTextFromValue(OpComps[i]->ratioSlider.getValue()).substring(0, 3);
             OpComps[i]->ratioLabel.setText("Ratio: " + aStr, juce::dontSendNotification);
         }
@@ -139,6 +170,8 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
             
         }
     }
+    
+        
 }
 
 void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)

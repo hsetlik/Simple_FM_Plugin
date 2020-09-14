@@ -11,6 +11,10 @@
 juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    auto algId = "algorithmParam";
+    auto algName = "Algorithm";
+    layout.add(std::make_unique<juce::AudioParameterFloat>
+               (algId, algName, 1.0f, 2.0f, 1.0f));
     for(int i = 0; i < 6; ++i)
     {
         juce::String iStr = juce::String(i);
@@ -43,10 +47,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>(levelId, levelName, 0.0f, 1.0f, 0.6f));
     }
-    auto algId = "algorithmParam";
-    auto algName = "Algorithm";
-    layout.add(std::make_unique<juce::AudioParameterFloat>
-               (algId, algName, 1.0f, 2.0f, 1.0f));
+    
     return layout;
     
 }
@@ -183,9 +184,11 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
            //yes that is supposed to be a single '='
            if((thisVoice =  dynamic_cast<HexVoice*>(HexSynth.getVoice(i))))
            {
+               thisVoice->setVoiceAlgorithm(tree.getRawParameterValue("algorithmParam"));
                for(int n = 0; n < 6; ++n)
                {
                    juce::String iStr = juce::String(n);
+                   //thisVoice->
                    thisVoice->setVoiceAttack(n, tree.getRawParameterValue("attackParam" + iStr));
                    thisVoice->setVoiceDecay(n, tree.getRawParameterValue("decayParam" + iStr));
                    thisVoice->setVoiceSustain(n, tree.getRawParameterValue("sustainParam" + iStr));

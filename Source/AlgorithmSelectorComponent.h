@@ -38,11 +38,7 @@ public:
     //functions
     AlgorithmSelectorComponent();
     ~AlgorithmSelectorComponent() {}
-    AlgorithmDiagram::algorithm currentAlg = AlgorithmDiagram::alg2;
-    void setAlgorithm(AlgorithmDiagram::algorithm setting)
-    {
-        currentAlg = setting;
-    }
+    AlgorithmDiagram::algorithm currentAlg;
     void resized() override;
     //child componenets
     juce::Slider selectorKnob;
