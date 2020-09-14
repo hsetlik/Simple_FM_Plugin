@@ -48,7 +48,7 @@ class HexVoice : public juce::SynthesiserVoice
     }
     void setVoiceRelease(int index, std::atomic<float>* value)
     {
-        proc.allOps[index]->envelope.setDecay(*value);
+        proc.allOps[index]->envelope.setRelease(*value);
     }
     void setVoiceRatio(int index, std::atomic<float>* value)
     {
@@ -111,6 +111,7 @@ class HexVoice : public juce::SynthesiserVoice
        for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
         {
             float mixSample = proc.getAudibleSampleForAlg();
+            
             for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, mixSample);
@@ -126,4 +127,5 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     AlgorithmProcessor proc;
     double fundamental;
+    
 };

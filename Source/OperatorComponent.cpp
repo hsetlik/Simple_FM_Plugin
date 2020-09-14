@@ -20,7 +20,7 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     aSlider.setSliderStyle(juce::Slider::Rotary);
     aSlider.setRange(1.0f, 5000.0);
     aSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 50, 20);
-    aSlider.setValue(1.0);
+    aSlider.setValue(15.0);
     aSlider.addListener(sliderLstnr);
     addAndMakeVisible(&aSlider);
     aSlider.setNumDecimalPlacesToDisplay(1);
@@ -33,7 +33,7 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     dSlider.setSliderStyle(juce::Slider::Rotary);
     dSlider.setRange(1.0f, 5000.0);
     dSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 50, 20);
-    dSlider.setValue(1.0);
+    dSlider.setValue(20.0);
     dSlider.addListener(sliderLstnr);
     addAndMakeVisible(&dSlider);
     dSlider.setNumDecimalPlacesToDisplay(1);
@@ -45,7 +45,7 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     sSlider.setSliderStyle(juce::Slider::Rotary);
     sSlider.setRange(0.0f, 1.0f);
     sSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 50, 20);
-    sSlider.setValue(1.0);
+    sSlider.setValue(0.6);
     sSlider.addListener(sliderLstnr);
     addAndMakeVisible(&sSlider);
     sSlider.setNumDecimalPlacesToDisplay(1);
@@ -56,7 +56,7 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     rSlider.setSliderStyle(juce::Slider::Rotary);
     rSlider.setRange(1.0f, 5000.0);
     rSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 50, 20);
-    rSlider.setValue(1.0);
+    rSlider.setValue(100.0);
     rSlider.addListener(sliderLstnr);
     rSlider.setSkewFactorFromMidPoint(200.0);
     addAndMakeVisible(&rSlider);

@@ -31,13 +31,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         auto levelName = "Operator " + iStr + " Level";
         
         layout.add(std::make_unique<juce::AudioParameterFloat>
-        (asId, asName, 0.1f, 4000.0f, 8.0f));
+                   (asId, asName, 15.0f, 4000.0f, 8.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>
-        (dsId, dsName, 0.1f, 4000.0f, 8.0f));
+                   (dsId, dsName, 20.0f, 4000.0f, 8.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>
         (ssId, ssName, 0.0f, 1.0f, 0.6f));
         layout.add(std::make_unique<juce::AudioParameterFloat>
-        (rsId, rsName, 0.1f, 4000.0f, 8.0f));
+                   (rsId, rsName, 100.0f, 4000.0f, 8.0f));
         
         layout.add(std::make_unique<juce::AudioParameterFloat>(indexId, indexName, 1.0f, 500.0f, 1.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
