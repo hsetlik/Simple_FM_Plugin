@@ -22,6 +22,7 @@ public:
     void paint(juce::Graphics& g) override;
     //non-component data
     int OpComponentIndex;
+    
     juce::Slider::Listener* sliderLstnr;
     juce::Button::Listener* buttonLstnr;
     //child components & attachments

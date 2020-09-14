@@ -110,6 +110,7 @@ class HexVoice : public juce::SynthesiserVoice
     {
        for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
         {
+            proc.setModValues();
             float mixSample = proc.getAudibleSampleForAlg();
             
             for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)

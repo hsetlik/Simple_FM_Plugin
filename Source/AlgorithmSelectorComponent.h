@@ -38,11 +38,14 @@ public:
     //functions
     AlgorithmSelectorComponent();
     ~AlgorithmSelectorComponent() {}
-    AlgorithmDiagram::algorithm currentAlg = AlgorithmDiagram::alg1;
+    AlgorithmDiagram::algorithm currentAlg = AlgorithmDiagram::alg2;
+    void setAlgorithm(AlgorithmDiagram::algorithm setting)
+    {
+        currentAlg = setting;
+    }
     void resized() override;
     //child componenets
     juce::Slider selectorKnob;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> selectorKnobAttach;
     AlgorithmDiagram diagram;
-    
 };

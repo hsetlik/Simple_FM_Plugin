@@ -13,6 +13,7 @@
 
 OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, juce::Button::Listener* bLstnr)
 {
+    
     OpComponentIndex = index;
     sliderLstnr = sLstnr;
     buttonLstnr = bLstnr;

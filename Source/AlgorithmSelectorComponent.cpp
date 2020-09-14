@@ -11,7 +11,7 @@
 #include "AlgorithmSelectorComponent.h"
 void AlgorithmDiagram::paint(juce::Graphics &g)
 {
-    int n = getWidth() / 18;
+    int n = getHeight() / 18;
     g.fillAll(juce::Colours::whitesmoke);
     for(int i = 0; i < 6; ++i)
     {
@@ -66,23 +66,23 @@ void AlgorithmDiagram::paint(juce::Graphics &g)
         }
         case alg2:
         {   //alg 2 is just a clone of alg 1 for now
-            opBox[0].setX(7 * n);
-            opBox[0].setY(n);
+            opBox[0].setX(3 * n);
+            opBox[0].setY(3 * n);
             
-            opBox[1].setX(7 * n);
-            opBox[1].setY(5 * n);
+            opBox[1].setX(8 * n);
+            opBox[1].setY(3 * n);
             
-            opBox[2].setX(7 * n);
-            opBox[2].setY(9 * n);
+            opBox[2].setX(13 * n);
+            opBox[2].setY(3 * n);
             
             opBox[3].setX(3 * n);
-            opBox[3].setY(5 * n);
+            opBox[3].setY(10 * n);
             
-            opBox[4].setX(3 * n);
-            opBox[4].setY(9 * n);
+            opBox[4].setX(8 * n);
+            opBox[4].setY(10 * n);
             
-            opBox[5].setX(11 * n);
-            opBox[5].setY(9 * n);
+            opBox[5].setX(13 * n);
+            opBox[5].setY(10 * n);
             
             for(int i = 0; i < 6; ++i)
             {
@@ -93,19 +93,17 @@ void AlgorithmDiagram::paint(juce::Graphics &g)
             }
             g.setColour(juce::Colours::seagreen);
             
-            juce::Rectangle<int> line1 = {(int)4.9 * n, 3 * n, (int)0.2 * n, n};
-            juce::Rectangle<int> line2 = {(int)4.9 * n, 6 * n, (int)0.2 * n, n};
-            juce::Rectangle<int> line3 = {6 * n, (int)4.9 * n, n, (int)0.2 * n};
-            juce::Rectangle<int> line4 = {(int)7.9 * n, 6 * n, (int)0.2 * n, n};
-            juce::Rectangle<int> line5 = {3 * n, (int)7.9 * n, n, (int)0.2 * n};
+            juce::Rectangle<int> line1 = {6 * n, 4 * n, 2 * n, n};
+            juce::Rectangle<int> line2 = {11 * n, 4 * n, 2 * n, n};
+            juce::Rectangle<int> line3 = {4 * n, 6 * n, n, 4 * n};
+            juce::Rectangle<int> line4 = {9 * n, 6 * n, n, 4 * n};
+            juce::Rectangle<int> line5 = {14 * n, 6 * n, n, 4 * n};
             
-            /*
             g.fillRect(line1);
             g.fillRect(line2);
             g.fillRect(line3);
             g.fillRect(line4);
             g.fillRect(line5);
-             */
         }
     }
 }

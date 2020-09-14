@@ -22,6 +22,7 @@ public:
     ~AlgorithmProcessor() {}
     void newNote(double fundamental);
     void setLayersForCurrentAlg();
+    void setModValues();
     void setOutputsInLayerOrder();
     float getAudibleSampleForAlg();
     void endNote();
