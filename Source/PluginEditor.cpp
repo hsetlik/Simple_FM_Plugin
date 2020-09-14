@@ -104,25 +104,26 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         algSelector.selectorKnob.setRange(1.0, 2.0, 1.0);
         auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
         float fValue = algSelector.selectorKnob.getValue();
-        printf("getValue() returns: %f\n", fValue);
+        algSelector.selectorKnob.setNumDecimalPlacesToDisplay(0);
         //algSelector.selectorKnob.setRange(1.0f, 2.0f, 1.0f);
         int iValue = (int)fValue;
-        printf("iValue: %d\n", iValue);
         if(iValue == 1)
         {
-            audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg1;
+            *audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg1;
             algSelector.selectorKnob.setValue(1);
         }
         else if(iValue > 1)
         {
-            audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg2;
+            *audioProcessor.thisVoice->proc.currentAlg = AlgorithmDiagram::alg2;
             algSelector.selectorKnob.setValue(2);
         }
+        algSelector.diagram.repaint();
+        
         juce::String enumStr[2];
         enumStr[0] = "alg1";
         enumStr[1] = "alg2";
         
-        juce::String cAlgStr = enumStr[audioProcessor.thisVoice->proc.currentAlg];
+        juce::String cAlgStr = enumStr[*audioProcessor.thisVoice->proc.currentAlg];
         const char* outString = cAlgStr.toUTF8();
         printf("current alg: %s\n", outString);
     }

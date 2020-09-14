@@ -9,7 +9,7 @@
 */
 
 #include "AlgorithmProcessor.h"
-AlgorithmProcessor::AlgorithmProcessor() : op0(0, &fundamental), op1(1, &fundamental), op2(2, &fundamental), op3(3, &fundamental), op4(4, &fundamental), op5(5, &fundamental)
+AlgorithmProcessor::AlgorithmProcessor(AlgorithmSelectorComponent* comp) : op0(0, &fundamental), op1(1, &fundamental), op2(2, &fundamental), op3(3, &fundamental), op4(4, &fundamental), op5(5, &fundamental)
 {
     allOps.push_back(&op0);
     allOps.push_back(&op1);
@@ -17,6 +17,8 @@ AlgorithmProcessor::AlgorithmProcessor() : op0(0, &fundamental), op1(1, &fundame
     allOps.push_back(&op3);
     allOps.push_back(&op4);
     allOps.push_back(&op5);
+    
+    currentAlg = &comp->diagram.curAlg;
 }
 
 void AlgorithmProcessor::newNote(double fund)
@@ -30,7 +32,7 @@ void AlgorithmProcessor::newNote(double fund)
 
 void AlgorithmProcessor::setLayersForCurrentAlg()
 {
-   switch(currentAlg)
+   switch(*currentAlg)
    {
        case AlgorithmDiagram::alg1:
        {
@@ -55,7 +57,7 @@ void AlgorithmProcessor::setLayersForCurrentAlg()
 
 void AlgorithmProcessor::setModValues()
 {
-    switch(currentAlg)
+    switch(*currentAlg)
     {
         case AlgorithmDiagram::alg1:
         {
@@ -110,7 +112,7 @@ void AlgorithmProcessor::setOutputsInLayerOrder()
 float AlgorithmProcessor::getAudibleSampleForAlg()
 {
     setOutputsInLayerOrder();
-    switch(currentAlg)
+    switch(*currentAlg)
     {
         case AlgorithmDiagram::alg1:
         {

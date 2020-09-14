@@ -24,12 +24,14 @@ public:
     //functions
     AlgorithmDiagram(AlgorithmDiagram::algorithm algSetting)
     {
-        currentAlg = algSetting;
+        curAlg = algSetting;
     }
     ~AlgorithmDiagram() {}
     void paint(juce::Graphics& g) override;
+    void paintAlg1(juce::Graphics& g);
+    void paintAlg2(juce::Graphics& g);
     void resized() override;
-    AlgorithmDiagram::algorithm currentAlg;
+    AlgorithmDiagram::algorithm curAlg = alg2; //setting the default algorithm to 1
     juce::Rectangle<int> opBox[6];
 };
 class AlgorithmSelectorComponent : public juce::Component
@@ -38,7 +40,6 @@ public:
     //functions
     AlgorithmSelectorComponent();
     ~AlgorithmSelectorComponent() {}
-    AlgorithmDiagram::algorithm currentAlg;
     void resized() override;
     //child componenets
     juce::Slider selectorKnob;

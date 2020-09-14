@@ -18,7 +18,7 @@ class AlgorithmProcessor
 {
 public:
     //functions
-    AlgorithmProcessor();
+    AlgorithmProcessor(AlgorithmSelectorComponent* comp);
     ~AlgorithmProcessor() {}
     void newNote(double fundamental);
     void setLayersForCurrentAlg();
@@ -35,7 +35,7 @@ public:
     OperatorProcessor op4;
     OperatorProcessor op5;
     std::vector<OperatorProcessor*> allOps;
-    AlgorithmDiagram::algorithm currentAlg;
+    AlgorithmDiagram::algorithm* currentAlg;
     float fundamental;
     OperatorProcessor* layer0;
     OperatorProcessor* layer1;
