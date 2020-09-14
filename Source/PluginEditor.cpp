@@ -221,9 +221,5 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
             OpComps[i]->levelLabel.setText("Level: " + aStr, juce::dontSendNotification);
             
         }
-        if(button == &OpComps[i]->audioToggleButton)
-            buttonId = "audioToggleParam" + iStr;
-    }
-    
-        
+}
 }

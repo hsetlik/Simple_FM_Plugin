@@ -33,57 +33,6 @@ class HexVoice : public juce::SynthesiserVoice
     {
         return dynamic_cast<HexSound*>(sound) != nullptr;
     }
-    //==============================================
-    void attackSet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->fAttack = *value;
-        
-    }
-    void decaySet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->fDecay = *value;
-    }
-    void sustainSet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->fSustain = *value;
-    }
-    void releaseSet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->fRelease = *value;
-    }
-    void levelSet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->level = *value;
-    }
-    void ratioSet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->ratio = *value;
-    }
-    void modIndexSet(int index, std::atomic<float>* value)
-    {
-        proc.allOps[index]->modIndex = *value;
-    }
-    void outputSwitchSet(int index, std::atomic<float>* value)
-    {
-        bool isOn;
-        if(*value > 0.5f)
-            isOn = true;
-        else
-            isOn = false;
-        proc.allOps[index]->isAudible = isOn;
-    }
-    void modInputSet(int iIndex, int nIndex, std::atomic<float>* value)
-    {
-        bool isOn;
-        if(*value > 0.5f)
-        {
-            isOn = true;
-        }
-        else
-            isOn = false;
-        proc.allOps[iIndex]->takesInputFrom[nIndex] = isOn;
-    }
-    
     //========================================
     void setVoiceAttack(int index, std::atomic<float>* value)
     {
@@ -195,6 +144,5 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     AlgorithmProcessor proc;
     double fundamental;
-    
-    SetProcessor proc;
+
 };

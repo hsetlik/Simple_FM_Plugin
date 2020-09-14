@@ -67,10 +67,10 @@ HexFmAudioProcessor::HexFmAudioProcessor()
 {
     for(int i = 0; i < 6; ++i)
     {
-        thisSynth.addVoice(new HexVoice());
+        HexSynth.addVoice(new HexVoice());
     }
-    thisSynth.clearSounds();
-    thisSynth.addSound(new HexSound());
+    HexSynth.clearSounds();
+    HexSynth.addSound(new HexSound());
 }
 
 HexFmAudioProcessor::~HexFmAudioProcessor()
@@ -144,7 +144,7 @@ void HexFmAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::ignoreUnused(samplesPerBlock);
     lastSampleRate = sampleRate;
-    thisSynth.setCurrentPlaybackSampleRate(lastSampleRate);
+    HexSynth.setCurrentPlaybackSampleRate(lastSampleRate);
 }
 
 void HexFmAudioProcessor::releaseResources()

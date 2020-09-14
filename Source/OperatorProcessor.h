@@ -27,7 +27,6 @@ public:
     int totalDependencies;
     maxiEnv envelope;
     maxiOsc oscillator;
-    int opIndex;
     float* fundamental;
     double modValue;
     float ratio;
