@@ -77,6 +77,8 @@ class HexVoice : public juce::SynthesiserVoice
             proc.procAlgIndex = 1;
         else if(setting == 2)
             proc.procAlgIndex = 2;
+        else if(setting == 3)
+            proc.procAlgIndex = 3;
         proc.setLayersForCurrentAlg();
         
     }

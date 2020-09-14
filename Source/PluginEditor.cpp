@@ -101,7 +101,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
     if(slider == &algSelector.selectorKnob)
     {
-        algSelector.selectorKnob.setRange(1, 2, 1);
+        algSelector.selectorKnob.setRange(1, 3, 1);
         auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
         float fValue = algSelector.selectorKnob.getValue();
         printf("fValue: %f\n", fValue);

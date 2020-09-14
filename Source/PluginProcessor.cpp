@@ -14,7 +14,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
     auto algId = "algorithmParam";
     auto algName = "Algorithm";
     layout.add(std::make_unique<juce::AudioParameterFloat>
-               (algId, algName, 1.0f, 2.0f, 1.0f));
+               (algId, algName, 1.0f, 3.0f, 1.0f));
     for(int i = 0; i < 6; ++i)
     {
         juce::String iStr = juce::String(i);

@@ -24,6 +24,7 @@ public:
     void paint(juce::Graphics& g) override;
     void paintAlg1(juce::Graphics& g);
     void paintAlg2(juce::Graphics& g);
+    void paintAlg3(juce::Graphics& g);
     void resized() override;
     int currentAlgIndex = 1; //setting the default algorithm to 1
     juce::Rectangle<int> opBox[6];
