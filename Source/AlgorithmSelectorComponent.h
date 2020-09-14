@@ -10,7 +10,6 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "AlgorithmObjectSet.h"
 
 
 class AlgorithmDiagramSet : public juce::Component

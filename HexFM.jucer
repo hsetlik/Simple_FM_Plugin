@@ -44,10 +44,6 @@
             resource="0" file="Source/AlgorithmSelectorComponent.cpp"/>
       <FILE id="kaL6ei" name="AlgorithmSelectorComponent.h" compile="0" resource="0"
             file="Source/AlgorithmSelectorComponent.h"/>
-      <FILE id="MJN6U1" name="AlgorithmObjectSet.cpp" compile="1" resource="0"
-            file="Source/AlgorithmObjectSet.cpp"/>
-      <FILE id="TokBRM" name="AlgorithmObjectSet.h" compile="0" resource="0"
-            file="Source/AlgorithmObjectSet.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
