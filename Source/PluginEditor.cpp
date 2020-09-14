@@ -12,12 +12,12 @@
 //==============================================================================
 HexFmAudioProcessorEditor::HexFmAudioProcessorEditor (HexFmAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
-op0(0, this, this),
-op1(1, this, this),
-op2(2, this, this),
-op3(3, this, this),
-op4(4, this, this),
-op5(5, this, this)
+op0(0, this),
+op1(1, this),
+op2(2, this),
+op3(3, this),
+op4(4, this),
+op5(5, this)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -101,7 +101,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
     if(slider == &algSelector.selectorKnob)
     {
-        algSelector.selectorKnob.setRange(1.0, 2.0, 1.0);
+        algSelector.selectorKnob.setRange(1, 2, 1);
         auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
         float fValue = algSelector.selectorKnob.getValue();
         printf("fValue: %f\n", fValue);
@@ -109,6 +109,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         int iValue = (int)fValue;
         printf("iValue: %d\n\n", iValue);
         algSelector.diagram.currentAlgIndex = iValue;
+        algSelector.repaint();
     }
     for(int i = 0; i < 6; ++i)
     {
@@ -222,9 +223,4 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
     }
     
         
-}
-
-void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
-{
-    printf("button clicked\n");
 }

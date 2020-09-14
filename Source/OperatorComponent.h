@@ -16,7 +16,7 @@
 {
 public:
     //functions
-    OperatorComponent(int index, juce::Slider::Listener* sLstnr, juce::Button::Listener* bLstnr);
+    OperatorComponent(int index, juce::Slider::Listener* sLstnr);
     ~OperatorComponent() {}
     void resized() override;
     void paint(juce::Graphics& g) override;
@@ -24,7 +24,6 @@ public:
     int OpComponentIndex;
     
     juce::Slider::Listener* sliderLstnr;
-    juce::Button::Listener* buttonLstnr;
     //child components & attachments
     juce::Slider aSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> aSliderAttach;

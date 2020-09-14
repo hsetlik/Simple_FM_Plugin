@@ -133,9 +133,9 @@ AlgorithmSelectorComponent::AlgorithmSelectorComponent()
     selectorKnob.setSliderStyle(juce::Slider::IncDecButtons);
     //int initAlg = (int)selectorKnob.getValue();
     
-    selectorKnob.setRange(1.0, 2.0, 1.0);
+    selectorKnob.setRange(1, 2, 1);
     selectorKnob.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 60, 20);
-    selectorKnob.setNumDecimalPlacesToDisplay(1);
+    selectorKnob.setNumDecimalPlacesToDisplay(0);
     addAndMakeVisible(&selectorKnob);
     addAndMakeVisible(&diagram);
 }

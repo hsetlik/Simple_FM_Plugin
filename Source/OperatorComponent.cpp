@@ -11,12 +11,11 @@
 #include "OperatorComponent.h"
 
 
-OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, juce::Button::Listener* bLstnr)
+OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr)
 {
     
     OpComponentIndex = index;
     sliderLstnr = sLstnr;
-    buttonLstnr = bLstnr;
     //setting up envelope knobs
     aSlider.setSliderStyle(juce::Slider::Rotary);
     aSlider.setRange(1.0f, 5000.0);

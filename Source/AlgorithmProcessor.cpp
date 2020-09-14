@@ -73,16 +73,17 @@ void AlgorithmProcessor::setModValues()
         {
             allOps[0]->modValue = 0.0f;
             allOps[1]->modValue = allOps[0]->lastOutputSample;
-            allOps[3]->modValue = allOps[1]->lastOutputSample;
+            allOps[3]->modValue = allOps[0]->lastOutputSample;
             allOps[4]->modValue = allOps[3]->lastOutputSample;
-            allOps[2]->modValue = allOps[1]->lastOutputSample + allOps[4]->lastOutputSample;
-            allOps[5]->modValue = allOps[2]->lastOutputSample;
+            allOps[2]->modValue = allOps[1]->lastOutputSample;
+            allOps[5]->modValue = allOps[1]->lastOutputSample;
         }
     }
 }
 
 void AlgorithmProcessor::setOutputsInLayerOrder()
 {
+    setModValues();
     if(layer0 != nullptr)
     {
         layer0->lastOutputSample = layer0->getSample();
@@ -126,8 +127,8 @@ float AlgorithmProcessor::getAudibleSampleForAlg()
         case 2:
         {
             float outSample = 0.0f;
+            outSample += allOps[3]->lastOutputSample;
             outSample += allOps[4]->lastOutputSample;
-            outSample += allOps[2]->lastOutputSample;
             outSample += allOps[5]->lastOutputSample;
             return outSample;
         }

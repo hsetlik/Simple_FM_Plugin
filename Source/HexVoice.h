@@ -77,6 +77,8 @@ class HexVoice : public juce::SynthesiserVoice
             proc.procAlgIndex = 1;
         else if(setting == 2)
             proc.procAlgIndex = 2;
+        proc.setLayersForCurrentAlg();
+        
     }
     
     void startNote (int midiNoteNumber,
@@ -87,6 +89,7 @@ class HexVoice : public juce::SynthesiserVoice
         fundamental = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
         proc.newNote(fundamental);
         proc.setLayersForCurrentAlg();
+        proc.setOutputsInLayerOrder();
     }
     //=============================================
     void stopNote (float velocity, bool allowTailOff)
