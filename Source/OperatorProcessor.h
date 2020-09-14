@@ -27,16 +27,18 @@ public:
     maxiOsc oscillator;
     int opIndex;
     float* fundamental;
-    float modValue;
+    double modValue;
     float ratio;
     float modIndex;
     float level;
-    float lastOutputSample;
+    double frequency;
+    double lastOutputSample;
     float getSample()
     {
         float baseFreq = *fundamental * ratio;
         float modOffset = modValue * modIndex;
-        double preEnv = oscillator.sinewave(baseFreq + modOffset);
+        frequency = baseFreq + modOffset;
+        double preEnv = oscillator.sinewave(frequency);
         double postEnv =  envelope.adsr(preEnv, envelope.trigger);
         lastOutputSample = postEnv * level;
         return lastOutputSample;

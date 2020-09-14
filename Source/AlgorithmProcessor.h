@@ -20,7 +20,7 @@ public:
     //functions
     AlgorithmProcessor();
     ~AlgorithmProcessor() {}
-    void newNote(int midiNum);
+    void newNote(double fundamental);
     void setLayersForCurrentAlg();
     void setOutputsInLayerOrder();
     float getAudibleSampleForAlg();
@@ -36,11 +36,11 @@ public:
     std::vector<OperatorProcessor*> allOps;
     AlgorithmDiagram::algorithm currentAlg;
     float fundamental;
-    std::vector<OperatorProcessor*> layer0;
-    std::vector<OperatorProcessor*> layer1;
-    std::vector<OperatorProcessor*> layer2;
-    std::vector<OperatorProcessor*> layer3;
-    std::vector<OperatorProcessor*> layer4;
-    std::vector<OperatorProcessor*> layer5;
+    OperatorProcessor* layer0;
+    OperatorProcessor* layer1;
+    OperatorProcessor* layer2;
+    OperatorProcessor* layer3;
+    OperatorProcessor* layer4;
+    OperatorProcessor* layer5;
     
 };

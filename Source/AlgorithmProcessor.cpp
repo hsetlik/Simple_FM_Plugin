@@ -21,9 +21,9 @@ AlgorithmProcessor::AlgorithmProcessor() : op0(0, &fundamental), op1(1, &fundame
     currentAlg = AlgorithmDiagram::alg1;
 }
 
-void AlgorithmProcessor::newNote(int midiNum)
+void AlgorithmProcessor::newNote(double fund)
 {
-    fundamental = juce::MidiMessage::getMidiNoteInHertz(midiNum);
+    fundamental = fund;
     for(int i = 0; i < 6; ++i)
     {
         allOps[i]->envelope.trigger = 1;
@@ -32,78 +32,60 @@ void AlgorithmProcessor::newNote(int midiNum)
 
 void AlgorithmProcessor::setLayersForCurrentAlg()
 {
-    switch(currentAlg)
-    {
-        case AlgorithmDiagram::alg1:
-        {
-            layer0.push_back(allOps[0]);
-            layer1.push_back(allOps[1]);
-            layer2.push_back(allOps[3]);
-            layer3.push_back(allOps[4]);
-            layer4.push_back(allOps[2]);
-            layer5.push_back(allOps[5]);
-        }
-        case AlgorithmDiagram::alg2:
-        {
-            //dummy code copied from above
-            layer0.push_back(allOps[0]);
-            layer1.push_back(allOps[1]);
-            layer2.push_back(allOps[3]);
-            layer3.push_back(allOps[4]);
-            layer4.push_back(allOps[2]);
-            layer5.push_back(allOps[5]);
-        }
-    }
+   switch(currentAlg)
+   {
+       case AlgorithmDiagram::alg1:
+       {
+           layer0 = allOps[0];
+           layer1 = allOps[1];
+           layer2 = allOps[3];
+           layer3 = allOps[4];
+           layer4 = allOps[2];
+           layer5 = allOps[5];
+       }
+       case AlgorithmDiagram::alg2:
+       {
+         layer0 = allOps[0];
+         layer1 = allOps[1];
+         layer2 = allOps[3];
+         layer3 = allOps[4];
+         layer4 = allOps[2];
+         layer5 = allOps[5];
+       }
+   }
 }
 
 void AlgorithmProcessor::setOutputsInLayerOrder()
 {
-    if(layer0.size() != 0)
+    if(layer0 != nullptr)
     {
-        for(int i = 0; i < layer0.size(); ++i)
-        {
-            layer0[i]->lastOutputSample = layer0[i]->getSample();
-        }
+        layer0->lastOutputSample = layer0->getSample();
     }
-    if(layer1.size() != 0)
+    if(layer1 !=  nullptr)
     {
-        for(int i = 0; i < layer1.size(); ++i)
-        {
-            layer1[i]->lastOutputSample = layer1[i]->getSample();
-        }
+        layer1->lastOutputSample = layer1->getSample();
     }
-    if(layer2.size() != 0)
+    if(layer2 != nullptr)
     {
-        for(int i = 0; i < layer2.size(); ++i)
-        {
-            layer2[i]->lastOutputSample = layer2[i]->getSample();
-        }
+            layer2->lastOutputSample = layer2->getSample();
     }
-    if(layer3.size() != 0)
+    if(layer3 != nullptr)
     {
-        for(int i = 0; i < layer3.size(); ++i)
-        {
-            layer3[i]->lastOutputSample = layer3[i]->getSample();
-        }
+            layer3->lastOutputSample = layer3->getSample();
     }
-    if(layer4.size() != 0)
+    if(layer4 != nullptr)
     {
-        for(int i = 0; i < layer4.size(); ++i)
-        {
-            layer4[i]->lastOutputSample = layer4[i]->getSample();
-        }
+            layer4->lastOutputSample = layer4->getSample();
     }
-    if(layer5.size() != 0)
+    if(layer5 != nullptr)
     {
-        for(int i = 0; i < layer5.size(); ++i)
-        {
-            layer5[i]->lastOutputSample = layer5[i]->getSample();
-        }
+            layer5->lastOutputSample = layer5->getSample();
     }
 }
 
 float AlgorithmProcessor::getAudibleSampleForAlg()
 {
+    setOutputsInLayerOrder();
     switch(currentAlg)
     {
         case AlgorithmDiagram::alg1:
