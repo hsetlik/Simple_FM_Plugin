@@ -36,6 +36,14 @@
             file="Source/OperatorComponent.cpp"/>
       <FILE id="aAYWiQ" name="OperatorComponent.h" compile="0" resource="0"
             file="Source/OperatorComponent.h"/>
+      <FILE id="LwngK1" name="AlgorithmProcessor.cpp" compile="1" resource="0"
+            file="Source/AlgorithmProcessor.cpp"/>
+      <FILE id="Mqfh1F" name="AlgorithmProcessor.h" compile="0" resource="0"
+            file="Source/AlgorithmProcessor.h"/>
+      <FILE id="RMlQ38" name="AlgorithmSelectorComponent.cpp" compile="1"
+            resource="0" file="Source/AlgorithmSelectorComponent.cpp"/>
+      <FILE id="kaL6ei" name="AlgorithmSelectorComponent.h" compile="0" resource="0"
+            file="Source/AlgorithmSelectorComponent.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

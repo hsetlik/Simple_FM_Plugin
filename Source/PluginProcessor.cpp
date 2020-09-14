@@ -11,49 +11,45 @@
 juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    auto algId = "algorithmParam";
+    auto algName = "Algorithm";
+    layout.add(std::make_unique<juce::AudioParameterFloat>
+               (algId, algName, 1.0f, 3.0f, 1.0f));
     for(int i = 0; i < 6; ++i)
     {
         juce::String iStr = juce::String(i);
-        for(int n = 0; n < 6; ++n)
-        {
-            juce::String nStr = juce::String(n);
-            juce::String tempID = "mod" + nStr + "op" + iStr + "Param";
-            juce::String tempName = "Operator " + nStr + " modulating operator " + iStr;
-            layout.add(std::make_unique<juce::AudioParameterFloat>(tempID, tempName, 0.0, 1.0, 0.0));
-        }
-        juce::String aID = "aParam" + iStr;
-        juce::String aName = "Operator " + iStr + " attack";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(aID, aName, 0.1f, 5000.0f, 3.0f));
+        auto asId = "attackParam" + iStr;
+        auto asName = "Operator " + iStr + " Attack";
+        auto dsId = "decayParam" + iStr;
+        auto dsName = "Operator " + iStr + " Decay";
+        auto ssId = "sustainParam" + iStr;
+        auto ssName = "Operator " + iStr + " Sustain";
+        auto rsId = "releaseParam" + iStr;
+        auto rsName = "Operator " + iStr + " Release";
         
-        juce::String dID = "dParam" + iStr;
-        juce::String dName = "Operator " + iStr + " decay";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(dID, dName, 0.1f, 5000.0f, 55.0f));
+        auto indexId = "modIndexParam" + iStr;
+        auto indexName = "Operator " + iStr + " Index";
+        auto ratioId = "ratioParam" + iStr;
+        auto ratioName = "Operator " + iStr + " frequency ratio";
+        auto levelId = "levelParam" + iStr;
+        auto levelName = "Operator " + iStr + " Level";
         
-        juce::String sID = "sParam" + iStr;
-        juce::String sName = "Operator " + iStr + " sustain";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(sID, sName, 0.0f, 1.0f, 0.6f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+                   (asId, asName, 15.0f, 4000.0f, 8.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+                   (dsId, dsName, 20.0f, 4000.0f, 8.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+        (ssId, ssName, 0.0f, 1.0f, 0.6f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>
+                   (rsId, rsName, 1.0f, 4000.0f, 100.0f));
         
-        juce::String rID = "rParam" + iStr;
-        juce::String rName = "Operator " + iStr + " release";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(rID, rName, 0.1f, 5000.0f, 3.0f));
-        
-        juce::String indexID = "modIndexParam" + iStr;
-        juce::String indexName = "Operator " + iStr + " modulation index";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(indexID, indexName, 1.0f, 500.0f, 1.0f));
-        
-        juce::String ratioID = "ratioParam" + iStr;
-        juce::String ratioName = "Operator " + iStr + " frequency ratio";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(ratioID, ratioName, -10.0f, 10.0f, 1.0f));
-        
-        juce::String levelID = "levelParam" + iStr;
-        juce::String levelName = "Operator " + iStr + " level";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(levelID, levelName, 0.0f, 1.0f, 1.0f));
-        
-        juce::String audioOutID = "audioToggleParam" + iStr;
-        juce::String audioOutName = "Operator " + iStr + " audio Output";
-        layout.add(std::make_unique<juce::AudioParameterFloat>(audioOutID, audioOutName, 0.0f, 1.0f, 0.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(indexId, indexName, 1.0f, 500.0f, 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(levelId, levelName, 0.0f, 1.0f, 0.6f));
     }
+    
     return layout;
+    
 }
 
 //==============================================================================
@@ -66,7 +62,7 @@ HexFmAudioProcessor::HexFmAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), tree(*this, nullptr, "ALLPARAMATERS", createLayout())
+                       ), tree(*this, nullptr, "ALLPARAMETERS", createLayout())
 #endif
 {
     for(int i = 0; i < 6; ++i)
@@ -183,35 +179,28 @@ bool HexFmAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
 
 void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    for(int i = 0; i < thisSynth.getNumVoices(); ++i)
-        {
-            //yes that is supposed to be a single '='
-            if((thisVoice =  dynamic_cast<HexVoice*>(thisSynth.getVoice(i))))
-            {
-                for(int n = 0; n < 6; ++n)
-                {
-                    juce::String iStr = juce::String(n);
-                    for(int k = 0; k < 6; ++k)
-                    {
-                        juce::String kStr = juce::String(k);
-                        juce::String idString = "mod" + kStr + "op" + iStr + "Param";
-                        thisVoice->modInputSet(n, k, tree.getRawParameterValue(idString));
-                    }
-                    thisVoice->attackSet(n, tree.getRawParameterValue("aParam" + iStr));
-                    thisVoice->decaySet(n, tree.getRawParameterValue("dParam" + iStr));
-                    thisVoice->sustainSet(n, tree.getRawParameterValue("sParam" + iStr));
-                    thisVoice->releaseSet(n, tree.getRawParameterValue("rParam" + iStr));
-                    
-                    thisVoice->levelSet(n, tree.getRawParameterValue("levelParam" + iStr));
-                    thisVoice->modIndexSet(n, tree.getRawParameterValue("modIndexParam" + iStr));
-                    thisVoice->ratioSet(n, tree.getRawParameterValue("ratioParam" + iStr));
-                    
-                    thisVoice->outputSwitchSet(n, tree.getRawParameterValue("audioToggleParam" + iStr));
-                }
-            }
-        }
-        buffer.clear();
-        thisSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    for(int i = 0; i < HexSynth.getNumVoices(); ++i)
+       {
+           //yes that is supposed to be a single '='
+           if((thisVoice =  dynamic_cast<HexVoice*>(HexSynth.getVoice(i))))
+           {
+               thisVoice->setVoiceAlgorithm(tree.getRawParameterValue("algorithmParam"));
+               for(int n = 0; n < 6; ++n)
+               {
+                   juce::String iStr = juce::String(n);
+                   //thisVoice->
+                   thisVoice->setVoiceAttack(n, tree.getRawParameterValue("attackParam" + iStr));
+                   thisVoice->setVoiceDecay(n, tree.getRawParameterValue("decayParam" + iStr));
+                   thisVoice->setVoiceSustain(n, tree.getRawParameterValue("sustainParam" + iStr));
+                   thisVoice->setVoiceRelease(n, tree.getRawParameterValue("releaseParam" + iStr));
+                   thisVoice->setVoiceIndex(n, tree.getRawParameterValue("modIndexParam" + iStr));
+                   thisVoice->setVoiceRatio(n, tree.getRawParameterValue("ratioParam" + iStr));
+                   thisVoice->setVoiceLevel(n, tree.getRawParameterValue("levelParam" + iStr));
+               }
+           }
+       }
+       buffer.clear();
+       HexSynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //==============================================================================

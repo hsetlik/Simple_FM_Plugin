@@ -12,12 +12,12 @@
 //==============================================================================
 HexFmAudioProcessorEditor::HexFmAudioProcessorEditor (HexFmAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
-op0(0, this, this),
-op1(1, this, this),
-op2(2, this, this),
-op3(3, this, this),
-op4(4, this, this),
-op5(5, this, this)
+op0(0, this),
+op1(1, this),
+op2(2, this),
+op3(3, this),
+op4(4, this),
+op5(5, this)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -36,31 +36,38 @@ op5(5, this, this)
     OpComps.push_back(&op3);
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
-    //setting up attachments
+    
+    addAndMakeVisible(&algSelector);
+    algSelector.selectorKnob.addListener(this);
+    
+    algSelector.selectorKnobAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "algorithmParam", algSelector.selectorKnob));
+    
     for(int i = 0; i < 6; ++i)
     {
         //string to append to each parameter name
         juce::String iStr = juce::String(i);
-        //loop to attach mod toggle buttons
-        for(int n = 0; n < 6; ++n)
-        {
-            juce::String nStr = juce::String(n);
-            OpComps[i]->modToggleAttachments[n].reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "mod" + nStr + "op" + iStr + "Param", OpComps[i]->modToggleButtons[i]));
-        }
-        //attaching audio toggle
-        OpComps[i]->audioToggleAttach.reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "audioToggleParam" + iStr, OpComps[i]->audioToggleButton));
-        //attaching envelope parameters
-        OpComps[i]->aSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "aParam" + iStr, OpComps[i]->aSlider));
-        OpComps[i]->dSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "dParam" + iStr, OpComps[i]->dSlider));
-        OpComps[i]->sSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "sParam" + iStr, OpComps[i]->sSlider));
-        OpComps[i]->rSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "rParam" + iStr, OpComps[i]->rSlider));
-        //attach index slider
-        OpComps[i]->modIndexSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "modIndexParam" + iStr, OpComps[i]->modIndexSlider));
-        //attach ratio slider
-        OpComps[i]->ratioSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioParam" + iStr, OpComps[i]->ratioSlider));
-        //attach level slider
-        OpComps[i]->levelSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "levelParam" + iStr, OpComps[i]->levelSlider));
+        OpComps[i]->aSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "attackParam" + iStr,
+        OpComps[i]->aSlider));
+        
+        OpComps[i]->dSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "decayParam" + iStr,
+        OpComps[i]->dSlider));
+        
+        OpComps[i]->sSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "sustainParam" + iStr,
+        OpComps[i]->sSlider));
+        
+        OpComps[i]->rSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "releaseParam" + iStr,
+        OpComps[i]->rSlider));
+        
+        OpComps[i]->modIndexSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "modIndexParam" + iStr,
+        OpComps[i]->modIndexSlider));
+        
+        OpComps[i]->ratioSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioParam" + iStr,
+        OpComps[i]->ratioSlider));
+        
+        OpComps[i]->levelSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "levelParam" + iStr,
+        OpComps[i]->levelSlider));
     }
+    
 }
 
 HexFmAudioProcessorEditor::~HexFmAudioProcessorEditor()
@@ -78,46 +85,145 @@ void HexFmAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    int thirdW = getWidth() / 3;
+    int quarterW = getWidth() / 4;
     int halfH = getHeight() / 2;
     
-    op0.setBounds(0, 0, thirdW, halfH);
-    op1.setBounds(thirdW, 0, thirdW, halfH);
-    op2.setBounds(2 * thirdW, 0, thirdW, halfH);
-    op3.setBounds(0, halfH, thirdW, halfH);
-    op4.setBounds(thirdW, halfH, thirdW, halfH);
-    op5.setBounds(2 * thirdW, halfH, thirdW, halfH);
+    op0.setBounds(0, 0, quarterW, halfH);
+    op1.setBounds(quarterW, 0, quarterW, halfH);
+    op2.setBounds(2 * quarterW, 0, quarterW, halfH);
+    algSelector.setBounds(3 * quarterW, 0, quarterW, halfH);
+    op3.setBounds(0, halfH, quarterW, halfH);
+    op4.setBounds(quarterW, halfH, quarterW, halfH);
+    op5.setBounds(2 * quarterW, halfH, quarterW, halfH);
     
 }
 
 void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
-    printf("slider changed\n");
-}
-
-void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
-{
-    juce::String buttonId;
-    printf("button clicked\n");
-    //figure out which button was clicked
+    if(slider == &algSelector.selectorKnob)
+    {
+        algSelector.selectorKnob.setRange(1, 3, 1);
+        auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
+        float fValue = algSelector.selectorKnob.getValue();
+        printf("fValue: %f\n", fValue);
+        algSelector.selectorKnob.setNumDecimalPlacesToDisplay(0);
+        int iValue = (int)fValue;
+        printf("iValue: %d\n\n", iValue);
+        algSelector.diagram.currentAlgIndex = iValue;
+        algSelector.repaint();
+    }
     for(int i = 0; i < 6; ++i)
     {
-        auto iStr = juce::String(i);
-        for (int n = 0; n < 6; ++n)
+        if(slider == &OpComps[i]->aSlider)
         {
-            auto nStr = juce::String(n);
-            if (button == &OpComps[i]->modToggleButtons[n])
-                buttonId = "mod" + nStr + "op" + iStr + "Param";
+            auto aFlt = OpComps[i]->aSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 2;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->aSlider.getTextFromValue(OpComps[i]->aSlider.getValue()).substring(0, strLen);
+            OpComps[i]->aSliderLabel.setText("A: "+ aStr, juce::dontSendNotification);
+        }
+        else if(slider == &OpComps[i]->dSlider)
+        {
+            auto aFlt = OpComps[i]->dSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 2;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->dSlider.getTextFromValue(OpComps[i]->dSlider.getValue()).substring(0, strLen);
+            OpComps[i]->dSliderLabel.setText("D: "+ aStr, juce::dontSendNotification);
+        }
+        else if(slider == &OpComps[i]->sSlider)
+        {
+            printf("sustain slider moved\n");
+            auto aFlt = OpComps[i]->sSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 3;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->sSlider.getTextFromValue(OpComps[i]->sSlider.getValue()).substring(0, strLen);
+            OpComps[i]->sSliderLabel.setText("S: "+ aStr, juce::dontSendNotification);
+            
+        }
+        else if(slider == &OpComps[i]->rSlider)
+        {
+            auto aFlt = OpComps[i]->rSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 2;
+            else if(aFlt < 100)
+                strLen = 2;
+            else if(aFlt < 1000)
+                strLen = 3;
+            else
+                strLen = 4;
+            auto aStr = OpComps[i]->rSlider.getTextFromValue(OpComps[i]->rSlider.getValue()).substring(0, strLen);
+            OpComps[i]->rSliderLabel.setText("R: "+ aStr, juce::dontSendNotification);
+            
+        }
+        else if(slider == &OpComps[i]->ratioSlider)
+        {
+            printf("ratio slider moved\n");
+            auto aFlt = OpComps[i]->ratioSlider.getValue();
+            int strLen;
+            if(aFlt < 1)
+                strLen = 4;
+            else if(aFlt < 10)
+                strLen = 3;
+            else if(aFlt < 100)
+                strLen = 4;
+            else if(aFlt < 1000)
+                strLen = 4;
+            else
+                strLen = 5;
+            auto aStr = OpComps[i]->ratioSlider.getTextFromValue(OpComps[i]->ratioSlider.getValue()).substring(0, strLen);
+            OpComps[i]->ratioLabel.setText("Ratio: " + aStr, juce::dontSendNotification);
+        }
+        else if(slider == &OpComps[i]->modIndexSlider)
+        {
+            auto aFlt = OpComps[i]->modIndexSlider.getValue();
+            int strLen;
+            if(aFlt < 10)
+                strLen = 3;
+            else if(aFlt < 100)
+                strLen = 3;
+            else if(aFlt < 1000)
+                strLen = 4;
+            else
+                strLen = 5;
+            auto aStr = OpComps[i]->modIndexSlider.getTextFromValue(aFlt).substring(0, aFlt);
+            OpComps[i]->indexLabel.setText("Mod Index: " + aStr, juce::dontSendNotification);
+            
+        }
+        else if(slider == &OpComps[i]->levelSlider)
+        {
+            auto aFlt = OpComps[i]->levelSlider.getValue();
+            int strLen = 0;
+            if(aFlt < 10)
+                strLen = 3;
+            auto aStr = OpComps[i]->levelSlider.getTextFromValue(aFlt).substring(0, strLen);
+            OpComps[i]->levelLabel.setText("Level: " + aStr, juce::dontSendNotification);
+            
         }
         if(button == &OpComps[i]->audioToggleButton)
             buttonId = "audioToggleParam" + iStr;
     }
-    // buttonId is now equal to the parameter name of the button's parameter
-    auto buttonParam = audioProcessor.tree.getParameter(buttonId);
-    float valToAssign = 0.0f;
-    if(button->getToggleState())
-        valToAssign = 1.0f;
-    else
-        valToAssign = 0.0f;
-    buttonParam->setValue(valToAssign);
+    
+        
 }
