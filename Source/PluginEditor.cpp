@@ -97,7 +97,48 @@ void HexFmAudioProcessorEditor::resized()
 
 void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
-    printf("slider changed\n");
+    for(int i = 0; i < 6; ++i)
+    {
+        if(slider == &OpComps[i]->aSlider)
+        {
+            auto aStr = OpComps[i]->aSlider.getTextFromValue(OpComps[i]->aSlider.getValue()).substring(0, 3);
+            OpComps[i]->aSliderLabel.setText("A: "+ aStr, juce::dontSendNotification);
+        }
+        else if(slider == &OpComps[i]->dSlider)
+        {
+          auto aStr = OpComps[i]->dSlider.getTextFromValue(OpComps[i]->dSlider.getValue()).substring(0, 3);
+            OpComps[i]->dSliderLabel.setText("D: "+ aStr, juce::dontSendNotification);
+        }
+        else if(slider == &OpComps[i]->sSlider)
+        {
+            auto aStr = OpComps[i]->sSlider.getTextFromValue(OpComps[i]->sSlider.getValue()).substring(0, 3);
+            OpComps[i]->sSliderLabel.setText("S: "+ aStr, juce::dontSendNotification);
+            
+        }
+        else if(slider == &OpComps[i]->rSlider)
+        {
+            auto aStr = OpComps[i]->rSlider.getTextFromValue(OpComps[i]->rSlider.getValue()).substring(0, 3);
+            OpComps[i]->rSliderLabel.setText("R: "+ aStr, juce::dontSendNotification);
+            
+        }
+        else if(slider == &OpComps[i]->ratioSlider)
+        {
+            auto aStr = OpComps[i]->ratioSlider.getTextFromValue(OpComps[i]->ratioSlider.getValue()).substring(0, 3);
+            OpComps[i]->ratioLabel.setText("Ratio: " + aStr, juce::dontSendNotification);
+        }
+        else if(slider == &OpComps[i]->modIndexSlider)
+        {
+            auto aStr = OpComps[i]->modIndexSlider.getTextFromValue(OpComps[i]->modIndexSlider.getValue()).substring(0, 3);
+            OpComps[i]->indexLabel.setText("Mod Index: " + aStr, juce::dontSendNotification);
+            
+        }
+        else if(slider == &OpComps[i]->levelSlider)
+        {
+            auto aStr = OpComps[i]->levelSlider.getTextFromValue(OpComps[i]->levelSlider.getValue()).substring(0, 3);
+            OpComps[i]->levelLabel.setText("Level: " + aStr, juce::dontSendNotification);
+            
+        }
+    }
 }
 
 void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)

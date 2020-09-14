@@ -19,6 +19,7 @@ public:
     OperatorComponent(int index, juce::Slider::Listener* sLstnr, juce::Button::Listener* bLstnr);
     ~OperatorComponent() {}
     void resized() override;
+    void paint(juce::Graphics& g) override;
     //non-component data
     int OpComponentIndex;
     juce::Slider::Listener* sliderLstnr;
@@ -26,16 +27,29 @@ public:
     //child components & attachments
     juce::Slider aSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> aSliderAttach;
+    juce::Label aSliderLabel;
+    
     juce::Slider dSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> dSliderAttach;
+    juce::Label dSliderLabel;
+    
     juce::Slider sSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> sSliderAttach;
+    juce::Label sSliderLabel;
+    
     juce::Slider rSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> rSliderAttach;
+    juce::Label rSliderLabel;
+    
     juce::Slider levelSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> levelSliderAttach;
+    juce::Label levelLabel;
+    
     juce::Slider modIndexSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> modIndexSliderAttach;
+    juce::Label indexLabel;
+    
     juce::Slider ratioSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> ratioSliderAttach;
+    juce::Label ratioLabel;
 };
