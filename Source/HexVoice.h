@@ -70,12 +70,7 @@ class HexVoice : public juce::SynthesiserVoice
         float fValue = (float)*value;
         //printf("setting voice algorithm: %f\n", fValue);
         int setting = (int)fValue;
-        if(setting == 1)
-            proc.procAlgIndex = 1;
-        else if(setting == 2)
-            proc.procAlgIndex = 2;
-        else if(setting == 3)
-            proc.procAlgIndex = 3;
+        proc.procAlgIndex = setting;
         proc.setLayersForCurrentAlg();
     }
     void startNote (int midiNoteNumber,

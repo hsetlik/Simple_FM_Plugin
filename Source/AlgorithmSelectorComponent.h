@@ -10,6 +10,8 @@
 
 #pragma once
 #include <JuceHeader.h>
+#define TotalAlgorithms 6
+
 
 
 class AlgorithmDiagramSet : public juce::Component
@@ -25,6 +27,9 @@ public:
     void paintAlg1(juce::Graphics& g);
     void paintAlg2(juce::Graphics& g);
     void paintAlg3(juce::Graphics& g);
+    void paintAlg4(juce::Graphics& g);
+    void paintAlg5(juce::Graphics& g);
+    void paintAlg6(juce::Graphics& g);
     void resized() override;
     int currentAlgIndex = 1; //setting the default algorithm to 1
     juce::Rectangle<int> opBox[6];

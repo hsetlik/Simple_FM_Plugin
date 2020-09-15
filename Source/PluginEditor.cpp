@@ -110,17 +110,16 @@ void HexFmAudioProcessorEditor::resized()
     op4.setBounds(quarterW, halfH, quarterW, halfH);
     op5.setBounds(2 * quarterW, halfH, quarterW, halfH);
     
+    
 }
 
 void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
     if(slider == &algSelector.selectorKnob)
     {
-        algSelector.selectorKnob.setRange(1, 3, 1);
-        auto aStr = algSelector.selectorKnob.getTextFromValue(algSelector.selectorKnob.getValue());
+        algSelector.selectorKnob.setRange(1, 6, 1);
         float fValue = algSelector.selectorKnob.getValue();
         printf("fValue: %f\n", fValue);
-        algSelector.selectorKnob.setNumDecimalPlacesToDisplay(0);
         int iValue = (int)fValue;
         printf("iValue: %d\n\n", iValue);
         algSelector.diagram.currentAlgIndex = iValue;
@@ -133,7 +132,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
             auto aFlt = OpComps[i]->aSlider.getValue();
             int strLen;
             if(aFlt < 10)
-                strLen = 2;
+                strLen = 1;
             else if(aFlt < 100)
                 strLen = 2;
             else if(aFlt < 1000)
@@ -148,7 +147,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
             auto aFlt = OpComps[i]->dSlider.getValue();
             int strLen;
             if(aFlt < 10)
-                strLen = 2;
+                strLen = 1;
             else if(aFlt < 100)
                 strLen = 2;
             else if(aFlt < 1000)
@@ -180,7 +179,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
             auto aFlt = OpComps[i]->rSlider.getValue();
             int strLen;
             if(aFlt < 10)
-                strLen = 2;
+                strLen = 1;
             else if(aFlt < 100)
                 strLen = 2;
             else if(aFlt < 1000)
@@ -233,7 +232,6 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
                 strLen = 3;
             auto aStr = OpComps[i]->levelSlider.getTextFromValue(aFlt).substring(0, strLen);
             OpComps[i]->levelLabel.setText("Level: " + aStr, juce::dontSendNotification);
-            
         }
 }
 }

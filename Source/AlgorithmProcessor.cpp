@@ -61,6 +61,33 @@ void AlgorithmProcessor::setLayersForCurrentAlg()
            layer4 = allOps[4];
            layer5 = allOps[5];
        }
+       case 4:
+       {
+           layer0 = allOps[0];
+           layer1 = allOps[1];
+           layer2 = allOps[2];
+           layer3 = allOps[3];
+           layer4 = allOps[4];
+           layer5 = allOps[5];
+       }
+       case 5:
+       {
+         layer0 = allOps[0];
+         layer1 = allOps[1];
+         layer2 = allOps[2];
+         layer3 = allOps[3];
+         layer4 = allOps[4];
+         layer5 = allOps[5];
+       }
+       case 6:
+       {
+         layer0 = allOps[0];
+         layer1 = allOps[2];
+         layer2 = allOps[1];
+         layer3 = allOps[3];
+         layer4 = allOps[4];
+         layer5 = allOps[5];
+       }
    }
 }
 
@@ -95,6 +122,33 @@ void AlgorithmProcessor::setModValues()
             allOps[3]->modValue = allOps[2]->lastOutputSample;
             allOps[4]->modValue = allOps[3]->lastOutputSample;
             allOps[5]->modValue = allOps[4]->lastOutputSample;
+        }
+        case 4:
+        {
+            allOps[0]->modValue = 0.0f;
+            allOps[1]->modValue = 0.0f;
+            allOps[2]->modValue = allOps[0]->lastOutputSample;
+            allOps[3]->modValue = allOps[1]->lastOutputSample + allOps[2]->lastOutputSample;
+            allOps[4]->modValue = allOps[2]->lastOutputSample;
+            allOps[5]->modValue = allOps[3]->lastOutputSample;
+        }
+        case 5:
+        {
+            allOps[0]->modValue = allOps[0]->lastOutputSample;
+            allOps[1]->modValue = allOps[0]->lastOutputSample;
+            allOps[2]->modValue = allOps[1]->lastOutputSample;
+            allOps[3]->modValue = allOps[2]->lastOutputSample;
+            allOps[4]->modValue = allOps[3]->lastOutputSample;
+            allOps[5]->modValue = allOps[3]->lastOutputSample;
+        }
+        case 6:
+        {
+          allOps[0]->modValue = 0.0f;
+          allOps[1]->modValue = allOps[0]->lastOutputSample;
+          allOps[2]->modValue = 0.0f;
+          allOps[3]->modValue = allOps[2]->lastOutputSample;
+          allOps[4]->modValue = allOps[3]->lastOutputSample + allOps[4]->lastOutputSample;
+          allOps[5]->modValue = allOps[1]->lastOutputSample + allOps[4]->lastOutputSample;
         }
     }
 }
@@ -155,6 +209,28 @@ float AlgorithmProcessor::getAudibleSampleForAlg()
             float outSample = 0.0f;
             outSample += allOps[3]->lastOutputSample;
             outSample += allOps[4]->lastOutputSample;
+            outSample += allOps[5]->lastOutputSample;
+            return outSample;
+        }
+        case 4:
+        {
+            float outSample = 0.0f;
+            outSample += allOps[4]->lastOutputSample;
+            outSample += allOps[5]->lastOutputSample;
+            return outSample;
+        }
+        case 5:
+        {
+            float outSample = 0.0f;
+            outSample += allOps[4]->lastOutputSample;
+            outSample += allOps[3]->lastOutputSample;
+            outSample += allOps[5]->lastOutputSample;
+            return outSample;
+        }
+        case 6:
+        {
+            float outSample = 0.0f;
+            outSample += allOps[1]->lastOutputSample;
             outSample += allOps[5]->lastOutputSample;
             return outSample;
         }

@@ -14,7 +14,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
     auto algId = "algorithmParam";
     auto algName = "Algorithm";
     layout.add(std::make_unique<juce::AudioParameterFloat>
-               (algId, algName, 1.0f, 3.0f, 1.0f));
+               (algId, algName, 1, TotalAlgorithms, 1));
     for(int i = 0; i < 6; ++i)
     {
         juce::String iStr = juce::String(i);
@@ -40,17 +40,22 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         auto rDenId = "ratioDenParam" + iStr;
         auto rDenName = "Freq ratio " + iStr + " denominator";
         
+        
+        
         layout.add(std::make_unique<juce::AudioParameterFloat>(rNumId, rNumName, 1, 15, 1));
         layout.add(std::make_unique<juce::AudioParameterFloat>(rDenId, rDenName, 1, 15, 1));
         
+        auto aRange = juce::NormalisableRange<float>(1.0, 4000.0, 1.0, 0.28, false);
         layout.add(std::make_unique<juce::AudioParameterFloat>
-                   (asId, asName, 15.0f, 4000.0f, 8.0f));
+                   (asId, asName, aRange, 15.0));
+        auto dRange = juce::NormalisableRange<float>(1.0, 4000.0, 0.5, 0.28, false);
         layout.add(std::make_unique<juce::AudioParameterFloat>
-                   (dsId, dsName, 20.0f, 4000.0f, 8.0f));
+                   (dsId, dsName, dRange, 8.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>
         (ssId, ssName, 0.0f, 1.0f, 0.6f));
+        auto rRange = juce::NormalisableRange<float>(1.0, 5000.0, 0.5, 0.28, false);
         layout.add(std::make_unique<juce::AudioParameterFloat>
-                   (rsId, rsName, 1.0f, 4000.0f, 100.0f));
+                   (rsId, rsName, rRange, 100.0));
         
         layout.add(std::make_unique<juce::AudioParameterFloat>(indexId, indexName, 1.0f, 500.0f, 1.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
