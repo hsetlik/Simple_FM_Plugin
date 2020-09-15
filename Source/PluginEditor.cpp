@@ -23,6 +23,7 @@ op5(5, this)
     // editor's size to whatever you need it to be.
     setSize (800, 600);
     //placing operator components
+    addAndMakeVisible(&modGrid);
     addAndMakeVisible(&op0);
     addAndMakeVisible(&op1);
     addAndMakeVisible(&op2);
@@ -37,10 +38,16 @@ op5(5, this)
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
     
-    addAndMakeVisible(&algSelector);
-    algSelector.selectorKnob.addListener(this);
-    
-    algSelector.selectorKnobAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "algorithmParam", algSelector.selectorKnob));
+    for(int i = 0; i < 6; ++i)
+    {
+        juce::OwnedArray<ModButton>* thisInnerArray = modGrid.outerButtons.getUnchecked(i);
+        for(int n = 0; n < 6; ++n)
+        {
+            ModButton* thisButton = thisInnerArray->getUnchecked(i);
+            modGrid.buttonAttachments[i][n].reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "modSetParam" + juce::String(i) + juce::String(n), *thisButton));
+            thisButton->addListener(this);
+        }
+    }
     
     for(int i = 0; i < 6; ++i)
     {
@@ -92,6 +99,7 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    modGrid.repaint();
     
 }
 
@@ -105,7 +113,23 @@ void HexFmAudioProcessorEditor::resized()
     op0.setBounds(0, 0, quarterW, halfH);
     op1.setBounds(quarterW, 0, quarterW, halfH);
     op2.setBounds(2 * quarterW, 0, quarterW, halfH);
-    algSelector.setBounds(3 * quarterW, 0, quarterW, halfH);
+    modGrid.setBounds(3 * quarterW, 0, quarterW, halfH);
+    auto x = modGrid.getX();
+    auto y = modGrid.getY();
+    auto width = modGrid.getWidth();
+    auto height = modGrid.getHeight();
+    printf("modGrid x: %d\n", x);
+    printf("modGrid y: %d\n", y);
+    printf("modGrid width: %d\n", width);
+    printf("modGrid height: %d\n", height);
+    modGrid.setVisible(true);
+    if(modGrid.isVisible())
+        printf("modGrid is visible\n");
+    if(modGrid.isShowing())
+        printf("modGrid is showing\n");
+    
+    
+    
     op3.setBounds(0, halfH, quarterW, halfH);
     op4.setBounds(quarterW, halfH, quarterW, halfH);
     op5.setBounds(2 * quarterW, halfH, quarterW, halfH);
@@ -115,16 +139,6 @@ void HexFmAudioProcessorEditor::resized()
 
 void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 {
-    if(slider == &algSelector.selectorKnob)
-    {
-        algSelector.selectorKnob.setRange(1, 6, 1);
-        float fValue = algSelector.selectorKnob.getValue();
-        printf("fValue: %f\n", fValue);
-        int iValue = (int)fValue;
-        printf("iValue: %d\n\n", iValue);
-        algSelector.diagram.currentAlgIndex = iValue;
-        algSelector.repaint();
-    }
     for(int i = 0; i < 6; ++i)
     {
         if(slider == &OpComps[i]->aSlider)
@@ -159,7 +173,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         }
         else if(slider == &OpComps[i]->sSlider)
         {
-            printf("sustain slider moved\n");
+            //printf("sustain slider moved\n");
             auto aFlt = OpComps[i]->sSlider.getValue();
             int strLen;
             if(aFlt < 10)
@@ -192,7 +206,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
         }
         else if(slider == &OpComps[i]->ratioSlider)
         {
-            printf("ratio slider moved\n");
+            //printf("ratio slider moved\n");
             auto aFlt = OpComps[i]->ratioSlider.getValue();
             int strLen;
             if(aFlt < 1)
@@ -234,4 +248,20 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
             OpComps[i]->levelLabel.setText("Level: " + aStr, juce::dontSendNotification);
         }
 }
+}
+
+void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
+{
+    for(int i = 0; i < 6; ++i)
+    {
+        juce::OwnedArray<ModButton> * thisInnerArray = modGrid.outerButtons.getUnchecked(i);
+        for(int n = 0; n < 6; ++n)
+        {
+            ModButton* checkButton = thisInnerArray->getUnchecked(n);
+            if(button == checkButton)
+            {
+                //do something with the button data
+            }
+        }
+    }
 }

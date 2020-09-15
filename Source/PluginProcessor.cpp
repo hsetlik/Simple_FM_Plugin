@@ -60,6 +60,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         layout.add(std::make_unique<juce::AudioParameterFloat>(indexId, indexName, 1.0f, 500.0f, 1.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>(ratioId, ratioName, -10.0f, 10.0f, 1.0f));
         layout.add(std::make_unique<juce::AudioParameterFloat>(levelId, levelName, 0.0f, 1.0f, 0.6f));
+        
+        for(int n = 0; n < 6; ++n)
+        {
+            juce::String modBoolId = "modSetParam" + iStr + juce::String(n);
+            juce::String modBoolName = "Operator " + iStr + " > Operator " + juce::String(n);
+           layout.add(std::make_unique<juce::AudioParameterBool>(modBoolId, modBoolName, false));
+        }
     }
     
     return layout;

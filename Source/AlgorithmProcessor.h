@@ -37,6 +37,7 @@ public:
     std::vector<OperatorProcessor*> allOps;
     int procAlgIndex;
     float fundamental;
+    bool modGridSettings[6][6];
     OperatorProcessor* layer0;
     OperatorProcessor* layer1;
     OperatorProcessor* layer2;
