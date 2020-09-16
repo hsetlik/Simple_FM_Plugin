@@ -12,12 +12,12 @@
 //==============================================================================
 HexFmAudioProcessorEditor::HexFmAudioProcessorEditor (HexFmAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
-op0(0, this),
-op1(1, this),
-op2(2, this),
-op3(3, this),
-op4(4, this),
-op5(5, this)
+op0(0, this, this),
+op1(1, this, this),
+op2(2, this, this),
+op3(3, this, this),
+op4(4, this, this),
+op5(5, this, this)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -85,7 +85,6 @@ op5(5, this)
         
         juce::Range<double> rdRange = {1, 15};
         OpComps[i]->ratioDenSlider.setRange(rdRange, 1.0);
-        
     }
     
 }
@@ -99,7 +98,10 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.setColour(juce::Colours::green);
     modGrid.repaint();
+    //g.fillRect(modGrid.getBounds());
+    
     
 }
 
@@ -127,6 +129,9 @@ void HexFmAudioProcessorEditor::resized()
         printf("modGrid is visible\n");
     if(modGrid.isShowing())
         printf("modGrid is showing\n");
+    //modGrid.setOpaque(true);
+    if(modGrid.isOpaque())
+        printf("modGrid is opaque\n");
     
     
     

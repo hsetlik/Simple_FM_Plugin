@@ -11,12 +11,19 @@
 #include "OperatorComponent.h"
 
 
-OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr)
+OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, juce::Button::Listener* bLstnr)
 {
     
     OpComponentIndex = index;
     sliderLstnr = sLstnr;
+    buttonLstnr = bLstnr;
     //setting up envelope knobs
+    audioTogggleButton.setButtonText("Output");
+    audioTogggleButton.setClickingTogglesState(true);
+    audioTogggleButton.setColour(juce::TextButton::ColourIds::buttonColourId, juce::Colours::darkslategrey);
+    audioTogggleButton.setColour(juce::TextButton::ColourIds::buttonOnColourId, juce::Colours::lightseagreen);
+    addAndMakeVisible(&audioTogggleButton);
+    
     aSlider.setSliderStyle(juce::Slider::Rotary);
     aSlider.setRange(1.0f, 5000.0);
     aSlider.setTextBoxStyle(juce::Slider::NoTextBox, false, 50, 20);
@@ -148,6 +155,8 @@ void OperatorComponent::paint(juce::Graphics &g)
 void OperatorComponent::resized()
 {
     int n = getWidth() / 12;
+    
+    audioTogggleButton.setBounds(5.2 * n, (int)0.95 * n, (int)3.5 * n, (int)1.75 * n);
     
     aSlider.setBounds(8 * n, n, 4 * n, 4 * n);
     dSlider.setBounds(8 * n, 5 * n, 4 * n, 4 * n);

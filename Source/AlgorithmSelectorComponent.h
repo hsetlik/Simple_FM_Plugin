@@ -52,13 +52,17 @@ class ModButton : public juce::ShapeButton
 public:
     ModButton(int x, int y) : juce::ShapeButton("Button" + juce::String(x) + juce::String(y), juce::Colours::lightslategrey, juce::Colours::lightslategrey, juce::Colours::lightslategrey)
     {
-        buttonShapePath.startNewSubPath(0.0f, 0.0f);
-        buttonShapePath.addEllipse(0.0f, 0.0f, (float)getWidth(), (float)getHeight());
-        buttonShapePath.closeSubPath();
-        auto onColor = juce::Colours::lightseagreen;
+        int sixth = getParentWidth() / 6;
+        setBounds(x * sixth, y * sixth, sixth, sixth);
+        buttonBounds = (getBounds().reduced(3));
+        auto bX = buttonBounds.getX();
+        auto bY = buttonBounds.getY();
+        auto bWidth = buttonBounds.getWidth();
+        auto bHeight = buttonBounds.getHeight();
+        printf("button Bounds: %d, %d, %d, %d\n", bX, bY, bWidth, bHeight);
         setOnColours(onColor, onColor, onColor);
         shouldUseOnColours(true);
-        setBoundsRelative(0.0f, 0.0f, 1.0f, 1.0f);
+         printf("button Bounds 2: %d, %d, %d, %d\n", bX, bY, bWidth, bHeight);
         
         xPos = x;
         yPos = y;
@@ -66,23 +70,24 @@ public:
     ~ModButton() {}
     void resized() override
     {
-     setBoundsRelative(0.0f, 0.0f, 1.0f, 1.0f);
     }
     void paintButton(juce::Graphics& g, bool mouseOver, bool isMouseDown) override
     {
         juce::Colour buttonColor;
         if(getToggleState())
-            buttonColor = juce::Colours::lightslategrey;
-        else
             buttonColor = juce::Colours::lightseagreen;
+        else
+            buttonColor = juce::Colours::lightslategrey;
         g.setColour(buttonColor);
-        g.fillPath(buttonShapePath);
-        g.fillAll();
+        juce::Rectangle<int> buttonArea = getBounds().reduced(5);
+        g.fillRect(buttonArea);
     }
     
     int xPos;
     int yPos;
     juce::Path buttonShapePath;
+    juce::Rectangle<int> buttonBounds;
+    juce::Colour onColor = juce::Colours::lightseagreen;
 };
 
 class ModulationGrid : public juce::Component
@@ -97,11 +102,12 @@ public:
             for(int n = 0; n < 6; ++n)
             {
                 ModButton* newButton = new ModButton(i, n);
+                addAndMakeVisible(newButton);
                 newInnerArray->add(newButton);
             }
             outerButtons.add(newInnerArray);
         }
-        
+        setBoundsRelative(0.0f, 0.0f, 0.1f, 0.1f);
     }
     ~ModulationGrid() {}
     void resized() override
@@ -113,6 +119,7 @@ public:
             for(int n = 0; n < 6; ++n)
             {
                 ModButton* button = thisInnerArray->getUnchecked(n);
+                button->setClickingTogglesState(true);
                 button->setBounds(i * sixth, n * sixth, sixth, sixth);
             }
         }
@@ -125,7 +132,7 @@ public:
             for(int n = 0; n < 6; ++n)
             {
                 ModButton* button = thisInnerArray->getUnchecked(n);
-                button->paintButton(g, true, true);
+                button->paintButton(g, false, false);
             }
         }
     }

@@ -16,16 +16,19 @@
 {
 public:
     //functions
-    OperatorComponent(int index, juce::Slider::Listener* sLstnr);
+    OperatorComponent(int index, juce::Slider::Listener* sLstnr, juce::Button::Listener* bLstnr);
     ~OperatorComponent() {}
     void resized() override;
     void paint(juce::Graphics& g) override;
     //non-component data
     int OpComponentIndex;
     
-    
+    juce::Button::Listener* buttonLstnr;
     juce::Slider::Listener* sliderLstnr;
     //child components & attachments
+    juce::TextButton audioTogggleButton;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> aToggleAttach;
+    
     juce::Slider aSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> aSliderAttach;
     juce::Label aSliderLabel;

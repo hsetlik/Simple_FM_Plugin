@@ -93,16 +93,17 @@ HexFmAudioProcessor::HexFmAudioProcessor()
     HexSynth.clearSounds();
     HexSynth.addSound(new HexSound());
 }
-
 HexFmAudioProcessor::~HexFmAudioProcessor()
 {
 }
 
 //==============================================================================
+
 const juce::String HexFmAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
+
 
 bool HexFmAudioProcessor::acceptsMidi() const
 {
@@ -112,6 +113,7 @@ bool HexFmAudioProcessor::acceptsMidi() const
     return false;
    #endif
 }
+
 
 bool HexFmAudioProcessor::producesMidi() const
 {
