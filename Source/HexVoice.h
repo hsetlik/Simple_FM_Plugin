@@ -90,7 +90,7 @@ class HexVoice : public juce::SynthesiserVoice
     {
         fundamental = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
         proc.newNote(fundamental);
-        proc.setOutputsInLayerOrder();
+        proc.assignLayersInOrder();
         proc.setModSourcesFromGrid();
         
     }

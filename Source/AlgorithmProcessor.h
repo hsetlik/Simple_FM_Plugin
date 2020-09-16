@@ -22,12 +22,9 @@ public:
     ~AlgorithmProcessor() {}
     void newNote(double fundamental);
     void setModSourcesFromGrid();
-    void setLayersForCurrentAlg();
     void assignLayersInOrder();
-    void setModValues();
     void setModValuesFromGrid();
     void setOutputsInLayerOrder();
-    float getAudibleSampleForAlg();
     double getAudibleSampleForGrid();
     void endNote();
     
