@@ -144,12 +144,6 @@ void OperatorComponent::paint(juce::Graphics &g)
     auto labelString = juce::String(OpComponentIndex + 1);
     g.drawText(labelString, numberLabel, juce::Justification::centred, false);
     
-    /*
-    juce::Rectangle<int> levelBar;
-    auto currentScale = *barLevel;
-    levelBar.setBounds(n / 2, 16 * n, 6 * n * currentScale, n);
-    g.fillRect(levelBar);
-     */
 }
 
 void OperatorComponent::resized()

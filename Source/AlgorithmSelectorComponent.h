@@ -107,7 +107,7 @@ public:
             }
             outerButtons.add(newInnerArray);
         }
-        setBoundsRelative(0.0f, 0.0f, 0.1f, 0.1f);
+        //setBoundsRelative(0.0f, 0.0f, 0.1f, 0.1f);
     }
     ~ModulationGrid() {}
     void resized() override

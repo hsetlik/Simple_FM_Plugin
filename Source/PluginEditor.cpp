@@ -98,8 +98,43 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-    g.setColour(juce::Colours::green);
-    modGrid.repaint();
+    g.setColour(juce::Colours::darkslategrey);
+    juce::Rectangle<int> gridBounds = modGrid.getBounds().reduced(5);
+    int gridWidth = gridBounds.getWidth();
+    gridBounds.setSize(gridWidth, gridWidth);
+    int n = gridWidth / 15;
+    
+    juce::Rectangle<int> bkgndBounds = modGrid.getBounds().expanded(8);
+    int bkgWidth = bkgndBounds.getWidth();
+    bkgndBounds.setSize(bkgWidth, bkgWidth);
+    bkgndBounds.translate(-5, 5);
+    g.fillRect(bkgndBounds);
+    
+    g.setFont(juce::Font("Futura", n, juce::Font::italic));
+    float fGridFrac = (gridWidth / 6) * (14 / 8);
+    int gridFrac = fGridFrac + 2;
+    juce::Rectangle<int> vOperatorLabels[6];
+    juce::Rectangle<int> hOperatorLabels[6];
+    for(int i = 0; i < 6; ++i)
+    {
+        int hX = gridBounds.getX() + (gridFrac * i);
+        int hY = gridBounds.getBottom() + 4;
+        int hW = 6;
+        int hH = 8;
+        hOperatorLabels[i].setBounds(hX, hY, hW, hH);
+        
+        int vX = gridBounds.getX() - 12;
+        int vY = (gridFrac * i) + 13;
+        int vW = 6;
+        int vH = 8;
+        vOperatorLabels[i].setBounds(vX, vY, vW, vH);
+        
+        g.setColour(juce::Colours::white);
+        g.drawText(juce::String(i + 1), hOperatorLabels[i], juce::Justification::left);
+        g.drawText(juce::String(i + 1), vOperatorLabels[i], juce::Justification::left);
+    }
+    
+    //modGrid.repaint();
     //g.fillRect(modGrid.getBounds());
     
     
@@ -115,7 +150,8 @@ void HexFmAudioProcessorEditor::resized()
     op0.setBounds(0, 0, quarterW, halfH);
     op1.setBounds(quarterW, 0, quarterW, halfH);
     op2.setBounds(2 * quarterW, 0, quarterW, halfH);
-    modGrid.setBounds(3 * quarterW, 0, quarterW, halfH);
+    juce::Rectangle<int> gridBounds= {(int)3.1 * quarterW, 0, quarterW, halfH};
+    modGrid.setBounds(gridBounds.reduced(5));
     auto x = modGrid.getX();
     auto y = modGrid.getY();
     auto width = modGrid.getWidth();
