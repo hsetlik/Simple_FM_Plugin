@@ -143,6 +143,17 @@ void OperatorComponent::paint(juce::Graphics &g)
     g.setColour(juce::Colours::lightseagreen);
     auto labelString = juce::String(OpComponentIndex + 1);
     g.drawText(labelString, numberLabel, juce::Justification::centred, false);
+    g.setColour(juce::Colours::darkslategrey);
+    g.fillRect(levelBarContainer);
+    g.setColour(juce::Colours::orange);
+    g.fillRect(levelBarContent);
+}
+
+void OperatorComponent::setContentWidth(float portion)
+{
+    int n = getWidth() / 12;
+    contentWidth = (float)(6 * n) * portion;
+    levelBarContent.setBounds(n / 4, (int)(16.5 * n), contentWidth, n);
     
 }
 
@@ -167,4 +178,7 @@ void OperatorComponent::resized()
     
     levelLabel.setBounds(n / 3, 11 * n, 5 * n, n);
     levelSlider.setBounds(n, 12 * n, 4 * n, 4 * n);
+    
+    levelBarContainer.setBounds(n / 4, (int)(16.5 * n), 6 * n, n);
+    levelBarContent.setBounds(n / 4, (int)(16.5 * n), contentWidth, n);
 }

@@ -23,6 +23,7 @@ op5(5, this, this)
     // editor's size to whatever you need it to be.
     setSize (800, 600);
     //placing operator components
+    
     addAndMakeVisible(&modGrid);
     addAndMakeVisible(&op0);
     addAndMakeVisible(&op1);
@@ -38,6 +39,10 @@ op5(5, this, this)
     OpComps.push_back(&op4);
     OpComps.push_back(&op5);
     
+    
+    
+    
+    
     for(int i = 0; i < 6; ++i)
     {
         juce::OwnedArray<ModButton>* thisInnerArray = modGrid.outerButtons.getUnchecked(i);
@@ -51,6 +56,7 @@ op5(5, this, this)
     
     for(int i = 0; i < 6; ++i)
     {
+        
         //string to append to each parameter name
         juce::String iStr = juce::String(i);
         OpComps[i]->aSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "attackParam" + iStr,
@@ -135,6 +141,8 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
         g.setColour(juce::Colours::white);
         g.drawText(juce::String(i + 1), hOperatorLabels[i], juce::Justification::left);
         g.drawText(juce::String(i + 1), vOperatorLabels[i], juce::Justification::left);
+        lastLevels[i] = audioProcessor.thisVoice->opAverage[i];
+        OpComps[i]->setContentWidth(lastLevels[i]);
     }
 }
 
@@ -145,9 +153,7 @@ void HexFmAudioProcessorEditor::resized()
     int quarterW = getWidth() / 4;
     int halfH = getHeight() / 2;
     
-    op0.setBounds(0, 0, quarterW, halfH);
-    op1.setBounds(quarterW, 0, quarterW, halfH);
-    op2.setBounds(2 * quarterW, 0, quarterW, halfH);
+    
     juce::Rectangle<int> gridBounds= {(int)3.1 * quarterW, 0, quarterW, halfH};
     modGrid.setBounds(gridBounds.reduced(5));
     auto x = modGrid.getX();
@@ -167,13 +173,12 @@ void HexFmAudioProcessorEditor::resized()
     if(modGrid.isOpaque())
         printf("modGrid is opaque\n");
     
-    
-    
+    op0.setBounds(0, 0, quarterW, halfH);
+    op1.setBounds(quarterW, 0, quarterW, halfH);
+    op2.setBounds(2 * quarterW, 0, quarterW, halfH);
     op3.setBounds(0, halfH, quarterW, halfH);
     op4.setBounds(quarterW, halfH, quarterW, halfH);
     op5.setBounds(2 * quarterW, halfH, quarterW, halfH);
-    
-    
 }
 
 void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)

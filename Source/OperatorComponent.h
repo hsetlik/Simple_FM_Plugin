@@ -22,6 +22,10 @@ public:
     void paint(juce::Graphics& g) override;
     //non-component data
     int OpComponentIndex;
+    juce::Rectangle<int> levelBarContainer;
+    juce::Rectangle<int> levelBarContent;
+    void setContentWidth(float portion);
+    int contentWidth;
     
     juce::Button::Listener* buttonLstnr;
     juce::Slider::Listener* sliderLstnr;

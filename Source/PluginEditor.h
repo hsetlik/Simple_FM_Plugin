@@ -42,6 +42,7 @@ private:
     OperatorComponent op4;
     OperatorComponent op5;
     ModulationGrid modGrid;
+    float lastLevels[6];
     
     AlgorithmSelectorComponent algSelector;
     int lastAlgSetting;

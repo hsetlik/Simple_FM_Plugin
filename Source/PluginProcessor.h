@@ -48,21 +48,25 @@ public:
     void setCurrentProgram (int index) override;
     const juce::String getProgramName (int index) override;
     void changeProgramName (int index, const juce::String& newName) override;
-
+    
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
+    foleys::LevelMeterSource& getMeterSource(int index);
     HexVoice* thisVoice;
     HexVoice* lowestActive;
     int lowestActiveInt;
     juce::AudioProcessorValueTreeState tree;
     juce::Synthesiser HexSynth;
-    float currentLevels[6];
+    float lastBufferLevels[6];
+    
+    
+    
+
 private:
     
     double lastSampleRate;
-    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (HexFmAudioProcessor)
 };
