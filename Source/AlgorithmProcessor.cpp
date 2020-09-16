@@ -27,13 +27,55 @@ void AlgorithmProcessor::newNote(double fund)
     for(int i = 0; i < 6; ++i)
     {
         allOps[i]->envelope.trigger = 1;
-        for(int n = 0; n < 6; ++n)
+    }
+}
+
+void AlgorithmProcessor::assignLayersInOrder()
+{
+    layer0 = allOps[0];
+    layer1 = allOps[1];
+    layer2 = allOps[2];
+    layer3 = allOps[3];
+    layer4 = allOps[4];
+    layer5 = allOps[5];
+}
+
+void AlgorithmProcessor::setModSourcesFromGrid()
+{
+    
+}
+
+void AlgorithmProcessor::setModValuesFromGrid()
+{
+    for(int i = 0; i < 6; ++i)
+    {
+        
+        allOps[i]->modValue = 0.0f;
+        
         {
-            modGridSettings[i][n] = false;
+            for(int n = 0; n < 6; ++n)
+            {
+                if(!modGridSettings[i][n])
+                {
+                    allOps[i]->modValue += allOps[n]->lastOutputSample;
+                    //printf("op# %d taking from op# %d\n", i, n);
+                }
+            }
         }
     }
 }
 
+double AlgorithmProcessor::getAudibleSampleForGrid()
+{
+    double output = 0.0f;
+    for(int i = 0; i < 6; ++i)
+    {
+        double thisSample = allOps[i]->getSample();
+        if(allOps[i]->toOutput == false)
+            output += thisSample;
+    }
+    return output;
+}
 void AlgorithmProcessor::setLayersForCurrentAlg()
 {
    switch(procAlgIndex)

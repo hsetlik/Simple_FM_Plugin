@@ -71,15 +71,17 @@ class HexVoice : public juce::SynthesiserVoice
         //printf("setting voice algorithm: %f\n", fValue);
         int setting = (int)fValue;
         proc.procAlgIndex = setting;
-        proc.setLayersForCurrentAlg();
+        //proc.setLayersForCurrentAlg();
     }
     void setVoiceGrid(int i, int n, std::atomic<float>* value)
     {
-        proc.modGridSettings[i][n] = !(*value);
+        bool setting = (bool) *value;
+        proc.modGridSettings[i][n] = !setting;
     }
     void setAudioToggle(int index, std::atomic<float>* value)
     {
-        proc.allOps[index]->toOutput = !(*value);
+        bool setting = (bool) *value;
+        proc.allOps[index]->toOutput = !setting;
     }
     void startNote (int midiNoteNumber,
                     float velocity,
@@ -88,8 +90,9 @@ class HexVoice : public juce::SynthesiserVoice
     {
         fundamental = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
         proc.newNote(fundamental);
-        proc.setLayersForCurrentAlg();
         proc.setOutputsInLayerOrder();
+        proc.setModSourcesFromGrid();
+        
     }
     //=============================================
     void stopNote (float velocity, bool allowTailOff)
@@ -124,8 +127,9 @@ class HexVoice : public juce::SynthesiserVoice
     {
        for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
         {
-            proc.setModValues();
-            float mixSample = proc.getAudibleSampleForAlg();
+            
+            proc.setModValuesFromGrid();
+            float mixSample = proc.getAudibleSampleForGrid();
             for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, mixSample);

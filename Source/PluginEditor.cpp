@@ -292,6 +292,7 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
 {
     printf("button clicked\n");
+    audioProcessor.thisVoice->proc.setModSourcesFromGrid();
     for(int i = 0; i < 6; ++i)
     {
         juce::OwnedArray<ModButton> * thisInnerArray = modGrid.outerButtons[i];
@@ -300,14 +301,9 @@ void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
             ModButton* checkButton = thisInnerArray->getUnchecked(n);
             if(button == checkButton)
             {
-                if( i != n)
-                    printf("non-self mod clicked\n");
-                if(audioProcessor.thisVoice->proc.modGridSettings[i][n])
-                {
-                    printf("button %d, %d is ON\n", i, n);
-                }
-                else
-                    printf("button %d, %d is OFF\n", i, n);
+                bool thisSetting = audioProcessor.thisVoice->proc.modGridSettings[i][n];
+                if(thisSetting)
+                    printf("button is ON at %d, %d\n", i, n);
             }
         }
     }

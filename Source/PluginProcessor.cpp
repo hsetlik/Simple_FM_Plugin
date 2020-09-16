@@ -208,10 +208,14 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
            //yes that is supposed to be a single '='
            if((thisVoice =  dynamic_cast<HexVoice*>(HexSynth.getVoice(i))))
            {
-               thisVoice->setVoiceAlgorithm(tree.getRawParameterValue("algorithmParam"));
                for(int n = 0; n < 6; ++n)
                {
                    juce::String iStr = juce::String(n);
+                   for(int k = 0; k < 6; ++k)
+                   {
+                       juce::String kStr = juce::String(k);
+                       thisVoice->setVoiceGrid(n, k, tree.getRawParameterValue("modSetParam" + iStr + kStr));
+                   }
                    thisVoice->setVoiceAttack(n, tree.getRawParameterValue("attackParam" + iStr));
                    thisVoice->setVoiceDecay(n, tree.getRawParameterValue("decayParam" + iStr));
                    thisVoice->setVoiceSustain(n, tree.getRawParameterValue("sustainParam" + iStr));
@@ -221,12 +225,7 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                                             tree.getRawParameterValue("ratioDenParam" + iStr));
                    thisVoice->setVoiceLevel(n, tree.getRawParameterValue("levelParam" + iStr));
                    thisVoice->setAudioToggle(n, tree.getRawParameterValue("audioToggleParam" + iStr));
-                   for(int k = 0; k < 6; ++k)
-                   {
-                       juce::String kStr = juce::String(k);
-                       thisVoice->setVoiceGrid(n, k, tree.getRawParameterValue("modSetParam" + iStr + kStr));
-                       
-                   }
+                   
                }
            }
        }
