@@ -32,6 +32,7 @@ public:
     float ratio;
     float modIndex;
     float level;
+    bool toOutput;
     double frequency;
     double lastOutputSample;
     float getSample()

@@ -27,6 +27,10 @@ void AlgorithmProcessor::newNote(double fund)
     for(int i = 0; i < 6; ++i)
     {
         allOps[i]->envelope.trigger = 1;
+        for(int n = 0; n < 6; ++n)
+        {
+            modGridSettings[i][n] = false;
+        }
     }
 }
 

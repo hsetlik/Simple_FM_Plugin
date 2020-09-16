@@ -73,6 +73,14 @@ class HexVoice : public juce::SynthesiserVoice
         proc.procAlgIndex = setting;
         proc.setLayersForCurrentAlg();
     }
+    void setVoiceGrid(int i, int n, std::atomic<float>* value)
+    {
+        proc.modGridSettings[i][n] = !(*value);
+    }
+    void setAudioToggle(int index, std::atomic<float>* value)
+    {
+        proc.allOps[index]->toOutput = !(*value);
+    }
     void startNote (int midiNoteNumber,
                     float velocity,
                     juce::SynthesiserSound *sound,

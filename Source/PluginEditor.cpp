@@ -43,7 +43,7 @@ op5(5, this, this)
         juce::OwnedArray<ModButton>* thisInnerArray = modGrid.outerButtons.getUnchecked(i);
         for(int n = 0; n < 6; ++n)
         {
-            ModButton* thisButton = thisInnerArray->getUnchecked(i);
+            ModButton* thisButton = thisInnerArray->getUnchecked(n);
             modGrid.buttonAttachments[i][n].reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "modSetParam" + juce::String(i) + juce::String(n), *thisButton));
             thisButton->addListener(this);
         }
@@ -79,6 +79,9 @@ op5(5, this, this)
         
         OpComps[i]->ratioDenSliderAttach.reset(new juce::AudioProcessorValueTreeState::SliderAttachment(audioProcessor.tree, "ratioDenParam" + iStr,
         OpComps[i]->ratioDenSlider));
+        
+        OpComps[i]->aToggleAttach.reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "audioToggleParam" + iStr,
+        OpComps[i]->audioTogggleButton));
         
         juce::Range<double> rnRange = {1, 15};
         OpComps[i]->ratioNumSlider.setRange(rnRange, 1.0);
@@ -133,11 +136,6 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
         g.drawText(juce::String(i + 1), hOperatorLabels[i], juce::Justification::left);
         g.drawText(juce::String(i + 1), vOperatorLabels[i], juce::Justification::left);
     }
-    
-    //modGrid.repaint();
-    //g.fillRect(modGrid.getBounds());
-    
-    
 }
 
 void HexFmAudioProcessorEditor::resized()
@@ -293,15 +291,23 @@ void HexFmAudioProcessorEditor::sliderValueChanged(juce::Slider *slider)
 
 void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
 {
+    printf("button clicked\n");
     for(int i = 0; i < 6; ++i)
     {
-        juce::OwnedArray<ModButton> * thisInnerArray = modGrid.outerButtons.getUnchecked(i);
+        juce::OwnedArray<ModButton> * thisInnerArray = modGrid.outerButtons[i];
         for(int n = 0; n < 6; ++n)
         {
             ModButton* checkButton = thisInnerArray->getUnchecked(n);
             if(button == checkButton)
             {
-                //do something with the button data
+                if( i != n)
+                    printf("non-self mod clicked\n");
+                if(audioProcessor.thisVoice->proc.modGridSettings[i][n])
+                {
+                    printf("button %d, %d is ON\n", i, n);
+                }
+                else
+                    printf("button %d, %d is OFF\n", i, n);
             }
         }
     }

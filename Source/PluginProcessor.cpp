@@ -40,7 +40,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
         auto rDenId = "ratioDenParam" + iStr;
         auto rDenName = "Freq ratio " + iStr + " denominator";
         
+        auto toggleID = "audioToggleParam" + iStr;
+        auto toggleName = "Operator " + iStr + " Output";
         
+        layout.add(std::make_unique<juce::AudioParameterBool>(toggleID, toggleName, false));
         
         layout.add(std::make_unique<juce::AudioParameterFloat>(rNumId, rNumName, 1, 15, 1));
         layout.add(std::make_unique<juce::AudioParameterFloat>(rDenId, rDenName, 1, 15, 1));
@@ -68,9 +71,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout createLayout()
            layout.add(std::make_unique<juce::AudioParameterBool>(modBoolId, modBoolName, false));
         }
     }
-    
     return layout;
-    
 }
 
 //==============================================================================
@@ -211,7 +212,6 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                for(int n = 0; n < 6; ++n)
                {
                    juce::String iStr = juce::String(n);
-                   //thisVoice->
                    thisVoice->setVoiceAttack(n, tree.getRawParameterValue("attackParam" + iStr));
                    thisVoice->setVoiceDecay(n, tree.getRawParameterValue("decayParam" + iStr));
                    thisVoice->setVoiceSustain(n, tree.getRawParameterValue("sustainParam" + iStr));
@@ -220,6 +220,13 @@ void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                    thisVoice->setVoiceRatio(n, tree.getRawParameterValue("ratioNumParam" + iStr),
                                             tree.getRawParameterValue("ratioDenParam" + iStr));
                    thisVoice->setVoiceLevel(n, tree.getRawParameterValue("levelParam" + iStr));
+                   thisVoice->setAudioToggle(n, tree.getRawParameterValue("audioToggleParam" + iStr));
+                   for(int k = 0; k < 6; ++k)
+                   {
+                       juce::String kStr = juce::String(k);
+                       thisVoice->setVoiceGrid(n, k, tree.getRawParameterValue("modSetParam" + iStr + kStr));
+                       
+                   }
                }
            }
        }
