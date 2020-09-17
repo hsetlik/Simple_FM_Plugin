@@ -12,6 +12,7 @@
 
 #include <JuceHeader.h>
 #include "AlgorithmProcessor.h"
+#include "LevelMeter.h"
 
 class HexSound : public juce::SynthesiserSound
 {
@@ -128,7 +129,6 @@ class HexVoice : public juce::SynthesiserVoice
         for(int i = 0; i < 6; ++i)
         {
             opBuffers[i].setSize(1, outputBuffer.getNumSamples());
-            samplesThisBlock[i] = 0.0f;
         }
        for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
         {
@@ -137,22 +137,8 @@ class HexVoice : public juce::SynthesiserVoice
             for(int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, mixSample);
-                for(int i = 0; i < 6; ++i)
-                {
-                    float sampleToAdd = proc.allOps[i]->lastOutputSample;
-                    if(channel == 0)
-                    {
-                        opBuffers[i].addSample(channel, startSample, sampleToAdd);
-                        samplesThisBlock[i] += fabs(sampleToAdd);
-                    }
-                        
-                }
             }
         ++startSample;
-        }
-        for(int i = 0; i < 6; ++i)
-        {
-            opAverage[i] = samplesThisBlock[i] / numSamples;
         }
     }
     //==============================================
@@ -163,7 +149,7 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     AlgorithmProcessor proc;
     double fundamental;
-    double samplesThisBlock[6];
+    
     float opAverage[6];
     juce::AudioBuffer<float> opBuffers[6] = {
     juce::AudioBuffer<float>(1, 512),

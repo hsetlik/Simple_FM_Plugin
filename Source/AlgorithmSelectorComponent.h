@@ -59,10 +59,10 @@ public:
         auto bY = buttonBounds.getY();
         auto bWidth = buttonBounds.getWidth();
         auto bHeight = buttonBounds.getHeight();
-        printf("button Bounds: %d, %d, %d, %d\n", bX, bY, bWidth, bHeight);
+        //printf("button Bounds: %d, %d, %d, %d\n", bX, bY, bWidth, bHeight);
         setOnColours(onColor, onColor, onColor);
         shouldUseOnColours(true);
-         printf("button Bounds 2: %d, %d, %d, %d\n", bX, bY, bWidth, bHeight);
+         //printf("button Bounds 2: %d, %d, %d, %d\n", bX, bY, bWidth, bHeight);
         
         xPos = x;
         yPos = y;

@@ -53,7 +53,6 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
     
-    foleys::LevelMeterSource& getMeterSource(int index);
     HexVoice* thisVoice;
     HexVoice* lowestActive;
     int lowestActiveInt;

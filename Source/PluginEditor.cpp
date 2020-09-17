@@ -141,8 +141,8 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
         g.setColour(juce::Colours::white);
         g.drawText(juce::String(i + 1), hOperatorLabels[i], juce::Justification::left);
         g.drawText(juce::String(i + 1), vOperatorLabels[i], juce::Justification::left);
-        lastLevels[i] = audioProcessor.thisVoice->opAverage[i];
-        OpComps[i]->setContentWidth(lastLevels[i]);
+        OpComps[i]->lMeter.attach(&audioProcessor.thisVoice->mSources[i]);
+        
     }
 }
 
@@ -156,17 +156,9 @@ void HexFmAudioProcessorEditor::resized()
     
     juce::Rectangle<int> gridBounds= {(int)3.1 * quarterW, 0, quarterW, halfH};
     modGrid.setBounds(gridBounds.reduced(5));
-    auto x = modGrid.getX();
-    auto y = modGrid.getY();
-    auto width = modGrid.getWidth();
-    auto height = modGrid.getHeight();
-    printf("modGrid x: %d\n", x);
-    printf("modGrid y: %d\n", y);
-    printf("modGrid width: %d\n", width);
-    printf("modGrid height: %d\n", height);
+    
     modGrid.setVisible(true);
-    if(modGrid.isVisible())
-        printf("modGrid is visible\n");
+
     if(modGrid.isShowing())
         printf("modGrid is showing\n");
     //modGrid.setOpaque(true);

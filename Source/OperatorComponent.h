@@ -11,6 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "AlgorithmSelectorComponent.h"
+#include "LevelMeter.h"
 
  class OperatorComponent : public juce::Component
 {
@@ -22,9 +23,6 @@ public:
     void paint(juce::Graphics& g) override;
     //non-component data
     int OpComponentIndex;
-    juce::Rectangle<int> levelBarContainer;
-    juce::Rectangle<int> levelBarContent;
-    void setContentWidth(float portion);
     int contentWidth;
     
     juce::Button::Listener* buttonLstnr;
