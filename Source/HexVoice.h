@@ -30,6 +30,12 @@ class HexSound : public juce::SynthesiserSound
 class HexVoice : public juce::SynthesiserVoice
 {
     public:
+    
+    HexVoice(int index)
+    {
+        voiceIndex = index;
+        
+    }
     bool canPlaySound(juce::SynthesiserSound* sound)
     {
         return dynamic_cast<HexSound*>(sound) != nullptr;
@@ -126,10 +132,6 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     void renderNextBlock (juce::AudioBuffer< float > &outputBuffer, int startSample, int numSamples)
     {
-        for(int i = 0; i < 6; ++i)
-        {
-            opBuffers[i].setSize(1, outputBuffer.getNumSamples());
-        }
        for(int sample = 0; sample < numSamples; ++sample) //calculate all the samples for this block
         {
             proc.setModValuesFromGrid();
@@ -149,7 +151,7 @@ class HexVoice : public juce::SynthesiserVoice
     //===============================================
     AlgorithmProcessor proc;
     double fundamental;
-    
+    int voiceIndex;
     float opAverage[6];
     juce::AudioBuffer<float> opBuffers[6] = {
     juce::AudioBuffer<float>(1, 512),
@@ -158,5 +160,14 @@ class HexVoice : public juce::SynthesiserVoice
     juce::AudioBuffer<float>(1, 512),
     juce::AudioBuffer<float>(1, 512),
     juce::AudioBuffer<float>(1, 512)};
+    
+    MeterSource operatorSources[6] = {
+        MeterSource(&proc.allOps[0]->lastNetLevel),
+        MeterSource(&proc.allOps[1]->lastNetLevel),
+        MeterSource(&proc.allOps[2]->lastNetLevel),
+        MeterSource(&proc.allOps[3]->lastNetLevel),
+        MeterSource(&proc.allOps[4]->lastNetLevel),
+        MeterSource(&proc.allOps[4]->lastNetLevel)
+    };
     
 };

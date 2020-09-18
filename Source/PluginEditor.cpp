@@ -23,7 +23,7 @@ op5(5, this, this)
     // editor's size to whatever you need it to be.
     setSize (800, 600);
     //placing operator components
-    
+    startTimerHz(30);
     addAndMakeVisible(&modGrid);
     addAndMakeVisible(&op0);
     addAndMakeVisible(&op1);
@@ -52,6 +52,8 @@ op5(5, this, this)
             modGrid.buttonAttachments[i][n].reset(new juce::AudioProcessorValueTreeState::ButtonAttachment(audioProcessor.tree, "modSetParam" + juce::String(i) + juce::String(n), *thisButton));
             thisButton->addListener(this);
         }
+        //attaching the sources to the meters
+        OpComps[i]->lMeter.attach(audioProcessor.mSources[i]);
     }
     
     for(int i = 0; i < 6; ++i)
@@ -141,7 +143,6 @@ void HexFmAudioProcessorEditor::paint (juce::Graphics& g)
         g.setColour(juce::Colours::white);
         g.drawText(juce::String(i + 1), hOperatorLabels[i], juce::Justification::left);
         g.drawText(juce::String(i + 1), vOperatorLabels[i], juce::Justification::left);
-        OpComps[i]->lMeter.attach(&audioProcessor.thisVoice->mSources[i]);
         
     }
 }
@@ -303,5 +304,16 @@ void HexFmAudioProcessorEditor::buttonClicked(juce::Button *button)
                     printf("button is ON at %d, %d\n", i, n);
             }
         }
+    }
+}
+
+void HexFmAudioProcessorEditor::timerCallback()
+{
+    audioProcessor.findWorkingVoice();
+    audioProcessor.attachSourcesToWorking();
+    for(int i = 0; i < 6; ++i)
+    {
+        float newLevel = audioProcessor.mSources[i]->getCurrentSample();
+        OpComps[i]->lMeter.adjustRectToLevel(newLevel);
     }
 }

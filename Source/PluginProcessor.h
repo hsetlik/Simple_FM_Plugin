@@ -52,17 +52,15 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    
+    //==============================================================================
+    void findWorkingVoice();
+    void attachSourcesToWorking();
     HexVoice* thisVoice;
-    HexVoice* lowestActive;
-    int lowestActiveInt;
+    HexVoice* displayedVoice;
     juce::AudioProcessorValueTreeState tree;
     juce::Synthesiser HexSynth;
-    float lastBufferLevels[6];
-    
-    
-    
-
+    MeterSource* mSources[6];
+    bool sourcesInitialized;
 private:
     
     double lastSampleRate;

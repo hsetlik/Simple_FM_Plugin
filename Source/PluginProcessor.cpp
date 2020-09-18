@@ -89,10 +89,11 @@ HexFmAudioProcessor::HexFmAudioProcessor()
 {
     for(int i = 0; i < 6; ++i)
     {
-        HexSynth.addVoice(new HexVoice());
+        HexSynth.addVoice(new HexVoice(i));
     }
     HexSynth.clearSounds();
     HexSynth.addSound(new HexSound());
+    displayedVoice = dynamic_cast<HexVoice*>(HexSynth.getVoice(0));
 }
 HexFmAudioProcessor::~HexFmAudioProcessor()
 {
@@ -200,6 +201,34 @@ bool HexFmAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
   #endif
 }
 #endif
+
+void HexFmAudioProcessor::findWorkingVoice()
+{
+    if(displayedVoice->isVoiceActive() == false)
+    {
+        bool voiceFound = false;
+            for(int i = 0; i < HexSynth.getNumVoices(); ++i)
+            {
+            if(voiceFound == false)
+            {
+              if(HexSynth.getVoice(i)->isVoiceActive())
+              {
+                  juce::SynthesiserVoice* pDisplayBase = HexSynth.getVoice(i);
+                  displayedVoice = dynamic_cast<HexVoice*>(pDisplayBase);
+                  voiceFound = true;
+              }
+            }
+        }
+    }
+}
+
+void HexFmAudioProcessor::attachSourcesToWorking()
+{
+    for(int i = 0; i < 6; ++i)
+    {
+        mSources[i] = &displayedVoice->operatorSources[i];
+    }
+}
 
 void HexFmAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {

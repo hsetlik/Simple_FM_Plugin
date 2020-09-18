@@ -28,6 +28,9 @@ public:
     juce::Button::Listener* buttonLstnr;
     juce::Slider::Listener* sliderLstnr;
     //child components & attachments
+    HorizontalLevelMeter lMeter;
+    
+    
     juce::TextButton audioTogggleButton;
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> aToggleAttach;
     

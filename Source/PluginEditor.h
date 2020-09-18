@@ -18,7 +18,8 @@
 class HexFmAudioProcessorEditor  :
 public juce::AudioProcessorEditor,
 public juce::Slider::Listener,
-public juce::Button::Listener
+public juce::Button::Listener,
+public juce::Timer
 {
 public:
     HexFmAudioProcessorEditor (HexFmAudioProcessor&);
@@ -29,11 +30,11 @@ public:
     void resized() override;
     void sliderValueChanged(juce::Slider* slider) override;
     void buttonClicked(juce::Button* button) override;
+    void timerCallback() override;
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     HexFmAudioProcessor& audioProcessor;
-    
     std::vector<OperatorComponent*> OpComps;
     OperatorComponent op0;
     OperatorComponent op1;
@@ -42,7 +43,7 @@ private:
     OperatorComponent op4;
     OperatorComponent op5;
     ModulationGrid modGrid;
-    float lastLevels[6];
+    float* lastLevels[6];
     
     AlgorithmSelectorComponent algSelector;
     int lastAlgSetting;

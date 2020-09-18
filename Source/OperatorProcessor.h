@@ -32,6 +32,7 @@ public:
     float ratio;
     float modIndex;
     float level;
+    float lastNetLevel;
     bool toOutput;
     double frequency;
     double lastOutputSample;
@@ -42,6 +43,8 @@ public:
         frequency = baseFreq + modOffset;
         double preEnv = oscillator.sinewave(frequency);
         double postEnv =  envelope.adsr(preEnv, envelope.trigger);
+        double netPostEnv = envelope.adsr(1.0f, envelope.trigger);
+        lastNetLevel = netPostEnv * level;
         lastOutputSample = postEnv * level;
         return lastOutputSample;
     }

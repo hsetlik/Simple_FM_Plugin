@@ -24,6 +24,7 @@ OperatorComponent::OperatorComponent(int index, juce::Slider::Listener* sLstnr, 
     addAndMakeVisible(&audioTogggleButton);
     
     //do each attachment in the editor file
+    addAndMakeVisible(&lMeter);
     
     aSlider.setSliderStyle(juce::Slider::Rotary);
     aSlider.setRange(1.0f, 5000.0);
@@ -171,5 +172,5 @@ void OperatorComponent::resized()
     levelLabel.setBounds(n / 3, 11 * n, 5 * n, n);
     levelSlider.setBounds(n, 12 * n, 4 * n, 4 * n);
     
-    //lMeter.setBounds(n / 4, (int)(16.5 * n), 6 * n, n);
+    lMeter.setBounds(n / 4, (int)(16.5 * n), 6 * n, n);
 }
